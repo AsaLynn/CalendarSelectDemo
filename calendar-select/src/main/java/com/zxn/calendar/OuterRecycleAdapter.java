@@ -1,9 +1,11 @@
 package com.zxn.calendar;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -15,14 +17,14 @@ import java.util.Map;
 
 public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    int                               totalCount;
-    Map<Integer, MonthTimeEntity>     map;
+    int totalCount;
+    Map<Integer, MonthTimeEntity> map;
     Map<Integer, List<DayTimeEntity>> listMap;
-    Calendar                          startCalendarDate;
-    Calendar                          endCalendarDate;
-    DayTimeEntity                     startDayTime;
-    DayTimeEntity                     endDayTime;
-    int                               selectType;
+    Calendar startCalendarDate;
+    Calendar endCalendarDate;
+    DayTimeEntity startDayTime;
+    DayTimeEntity endDayTime;
+    int selectType;
     public CalendarSelectUpdateCallback multCallback;
 
     public OuterRecycleAdapter(List<Object> list, int selectType,
@@ -93,7 +95,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public void scrollToLocation(){
+    public void scrollToLocation() {
         calculateListPosition();
         scrollToPosition();
     }
@@ -109,6 +111,9 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             DateOnclickListener listener = new DateOnclickListener(selectType, startDayTime, endDayTime, this);
             holder.itemView.setOnClickListener(listener);
             holder.itemView.setTag(listener);
+            holder.setSelectBgDrawable(mSelectBgDrawable);
+            holder.setIntervalSelectBgDrawable(mSelectBgDrawable);
+            holder.setIntervalSelectBgColor(mIntervalSelectBgColor);
             return holder;
         }
     }
@@ -168,5 +173,21 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setUpdateMultCallback(CalendarSelectUpdateCallback multCallback) {
         this.multCallback = multCallback;
+    }
+
+    private Drawable mSelectBgDrawable;
+    private Drawable mIntervalSelectBgDrawable;
+
+    public void setSelectBgDrawable(Drawable drawable) {
+        this.mSelectBgDrawable = drawable;
+    }
+
+    public void setIntervalSelectBgDrawable(Drawable drawable) {
+        this.mIntervalSelectBgDrawable = drawable;
+    }
+
+    private int mIntervalSelectBgColor;
+    public void setIntervalSelectBgColor(int color) {
+        this.mIntervalSelectBgColor = color;
     }
 }

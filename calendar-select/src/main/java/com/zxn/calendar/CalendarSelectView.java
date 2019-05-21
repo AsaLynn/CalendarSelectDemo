@@ -2,7 +2,9 @@ package com.zxn.calendar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,34 +26,34 @@ public class CalendarSelectView extends LinearLayout {
 
     private Context context;
 
-    public static       String START_TIME_KEY = "startTime";
-    public static       String END_TIME_KEY   = "endTime";
-    public static final int    SINGLE         = 1;
-    public static final int    MULT           = 2;
+    public static String START_TIME_KEY = "startTime";
+    public static String END_TIME_KEY = "endTime";
+    public static final int SINGLE = 1;
+    public static final int MULT = 2;
 
     private final int START = 0;
     private final int TODAY = 1;
-    private final int END   = 2;
+    private final int END = 2;
 
 
-    private TextView            leftTime;
-    private TextView            rightTime;
-    private RecyclerView        recyclerView;
-    private TextView            define;
-    private LinearLayout        timeParent;
-    private TextView            clear;
-    private TextView            confirm;
+    private TextView leftTime;
+    private TextView rightTime;
+    private RecyclerView recyclerView;
+    private TextView define;
+    private LinearLayout timeParent;
+    private TextView clear;
+    private TextView confirm;
     private OuterRecycleAdapter outAdapter;
 
     private int selectType;
     private int locationType;
 
-    Calendar          startCalendar;
-    Calendar          endCalendar;
-    Calendar          startCalendarDate;
-    Calendar          endCalendarDate;
-    DayTimeEntity     startDayTime;
-    DayTimeEntity     endDayTime;
+    Calendar startCalendar;
+    Calendar endCalendar;
+    Calendar startCalendarDate;
+    Calendar endCalendarDate;
+    DayTimeEntity startDayTime;
+    DayTimeEntity endDayTime;
     GridLayoutManager layoutManager;
 
     private ConfirmSelectDateCallback selectDateCallback;
@@ -72,6 +74,9 @@ public class CalendarSelectView extends LinearLayout {
             }
         }
     };
+    private Drawable mSelectBgDrawable;
+    private Drawable mIntervalSelectBgDrawable;
+    private int mIntervalSelectBgColor;
 
     public CalendarSelectView(Context context) {
         this(context, null);
@@ -138,12 +143,11 @@ public class CalendarSelectView extends LinearLayout {
     }
 
     private void initAdapter() {
-        layoutManager =
-                new GridLayoutManager(getContext(),
-                        7,
-                        GridLayoutManager.VERTICAL,
-                        false
-                );
+        layoutManager = new GridLayoutManager(getContext(),
+                7,
+                GridLayoutManager.VERTICAL,
+                false
+        );
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -163,6 +167,10 @@ public class CalendarSelectView extends LinearLayout {
         outAdapter = new OuterRecycleAdapter(Util.getTotalCount(startCalendar, endCalendar), selectType,
                 startCalendarDate, endCalendarDate,
                 startDayTime, endDayTime);
+        outAdapter.setSelectBgDrawable(mSelectBgDrawable);
+        outAdapter.setIntervalSelectBgDrawable(mIntervalSelectBgDrawable);
+        outAdapter.setIntervalSelectBgColor(mIntervalSelectBgColor);
+
         outAdapter.setUpdateMultCallback(multCallback);
         recyclerView.setAdapter(outAdapter);
         outAdapter.scrollToPosition();
@@ -175,6 +183,9 @@ public class CalendarSelectView extends LinearLayout {
             updateViewVisibility();
             locationType = array.getInt(R.styleable.calendarSelect_locate_position, START);
             updateDayTimeEntity();
+            mSelectBgDrawable = array.getDrawable(R.styleable.calendarSelect_select_bg);
+            mIntervalSelectBgDrawable = array.getDrawable(R.styleable.calendarSelect_interval_select_bg);
+            mIntervalSelectBgColor = array.getColor(R.styleable.calendarSelect_interval_select_color, ContextCompat.getColor(getContext(), R.color.day_mode_backround_1a1482f0));
             array.recycle();
         }
     }
@@ -276,7 +287,7 @@ public class CalendarSelectView extends LinearLayout {
         }
 
         updateMultView();
-        if (outAdapter != null){
+        if (outAdapter != null) {
             outAdapter.notifyDataSetChanged();
             outAdapter.scrollToLocation();
         }

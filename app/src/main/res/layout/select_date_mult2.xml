@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.zxn.calendar.CalendarSelectView
+        android:id="@+id/calendar_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        app:interval_select_color="@color/c_ff9800"
+        app:locate_position="today"
+        app:select_bg="@drawable/bg_sp_circle_c_fa753a_select"
+        app:select_type="mult" />
+</RelativeLayout>

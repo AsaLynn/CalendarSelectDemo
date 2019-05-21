@@ -10,5 +10,8 @@
             <enum name="today" value="1" />
             <enum name="end" value="2" />
         </attr>
+        <attr name="select_bg" format="reference" />
+        <attr name="interval_select_bg" format="reference" />
+        <attr name="interval_select_color" format="color" />
     </declare-styleable>
 </resources>

@@ -1,6 +1,7 @@
 package com.zxn.calendar;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,14 +22,10 @@ import java.util.Calendar;
 
 public class InnerViewHolder extends RecyclerView.ViewHolder {
 
-    //    @BindView(R.id.left_view)
-    View leftView;
-    //    @BindView(R.id.right_view)
-    View rightView;
-    //    @BindView(R.id.date)
-    TextView date;
-    //    @BindView(R.id.dot)
     View dot;
+    View leftView;
+    View rightView;
+    TextView date;
 
     Calendar startCalendarDate;
     Calendar endCalendarDate;
@@ -39,12 +36,8 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
 
     public InnerViewHolder(View itemView, Calendar startCalendarDate, Calendar endCalendarDate, DayTimeEntity startDayTime, DayTimeEntity endDayTime) {
         super(itemView);
-//        ButterKnife.bind(this, itemView);
-
-        //    @BindView(R.id.left_view)
 
         leftView = itemView.findViewById(R.id.left_view);
-
         rightView = itemView.findViewById(R.id.right_view);
 
         date = itemView.findViewById(R.id.date);
@@ -100,15 +93,15 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
                 || (startDayTime.day != endDayTime.day);
         boolean temp = (dayTimeEntity.listPosition > startDayTime.listPosition) && (dayTimeEntity.listPosition < endDayTime.listPosition);
         if (flag && value && temp) {
-            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
+            //int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
+            rightView.setBackgroundColor(mIntervalSelectBgColor);
+            leftView.setBackgroundColor(mIntervalSelectBgColor);
 
-
-            rightView.setBackgroundColor(color);
-            leftView.setBackgroundColor(color);
         } else {
             int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
             rightView.setBackgroundColor(color);
             leftView.setBackgroundColor(color);
+
         }
     }
 
@@ -160,24 +153,24 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
     private void responseToRange(DayTimeEntity entity, boolean isToday) {
         if ((startDayTime.listPosition >= 0) && (startDayTime.listPosition == entity.listPosition)) {
             updateDateBg(entity, startDayTime, isToday);
-            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
-            rightView.setBackgroundColor(color);
-            color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
+            //int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
+            rightView.setBackgroundColor(mIntervalSelectBgColor);
+            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
             leftView.setBackgroundColor(color);
         } else if ((startDayTime.listPosition >= 0)
                 && (endDayTime.listPosition >= 0)
                 && (entity.listPosition > startDayTime.listPosition)
                 && (entity.listPosition < endDayTime.listPosition)) {
             updateDateBg(entity, startDayTime, isToday);
-            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
-            rightView.setBackgroundColor(color);
-            leftView.setBackgroundColor(color);
+//            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
+            rightView.setBackgroundColor(mIntervalSelectBgColor);
+            leftView.setBackgroundColor(mIntervalSelectBgColor);
             date.setBackgroundColor(Color.TRANSPARENT);
         } else if ((endDayTime.listPosition >= 0) && (endDayTime.listPosition == entity.listPosition)) {
             updateDateBg(entity, endDayTime, isToday);
-            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
-            leftView.setBackgroundColor(color);
-            color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
+            //int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
+            leftView.setBackgroundColor(mIntervalSelectBgColor);
+            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
             rightView.setBackgroundColor(color);
         } else {
             updateDateBg(entity, startDayTime, isToday);
@@ -189,9 +182,15 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
         if (isToday) {
             color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_1482f0);
             dot.setVisibility(View.VISIBLE);
-            dot.setBackgroundResource(R.drawable.global_drawable_circle_select);
+            if (null == mSelectBgDrawable) {
+                dot.setBackgroundResource(R.drawable.global_drawable_circle_select);
+            } else {
+                dot.setBackground(mSelectBgDrawable);
+//                dot.setBackgroundDrawable(mSelectBgDrawable);
+            }
         } else {
             dot.setVisibility(View.GONE);
+//            dot.setVisibility(View.VISIBLE);
             color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color);
         }
         date.setText(Util.fillZero(entity.day));
@@ -210,7 +209,11 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
         boolean flag;
         flag = (tempTimeEntity.year == entity.year) && (tempTimeEntity.month == entity.month) && (tempTimeEntity.day == entity.day);
         if (flag) {
-            date.setBackgroundResource(R.drawable.global_drawable_circle_select);
+            if (null == mSelectBgDrawable) {
+                date.setBackgroundResource(R.drawable.global_drawable_circle_select);
+            } else {
+                date.setBackground(mSelectBgDrawable);
+            }
             date.setTextColor(Color.WHITE);
             dot.setVisibility(View.GONE);
         } else if (isToday) {
@@ -224,5 +227,21 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             date.setBackgroundColor(Color.TRANSPARENT);
             dot.setVisibility(View.GONE);
         }
+    }
+
+    private Drawable mSelectBgDrawable;
+    private Drawable mIntervalSelectBgDrawable;
+
+    public void setSelectBgDrawable(Drawable drawable) {
+        this.mSelectBgDrawable = drawable;
+    }
+
+    public void setIntervalSelectBgDrawable(Drawable drawable) {
+        this.mIntervalSelectBgDrawable = drawable;
+    }
+
+    private int mIntervalSelectBgColor;
+    public void setIntervalSelectBgColor(int color) {
+        this.mIntervalSelectBgColor = color;
     }
 }

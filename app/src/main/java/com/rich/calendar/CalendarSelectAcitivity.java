@@ -18,7 +18,7 @@ public class CalendarSelectAcitivity extends AppCompatActivity {
         } else if (TextUtils.equals(flag, "mult")) {
             setContentView(R.layout.select_date_mult);
         } else {
-            setContentView(R.layout.select_date_mult);
+            setContentView(R.layout.select_date_mult2);
         }
     }
 }
