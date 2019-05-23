@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">calendar-select</string>
-    <string name="outer_title">%1$s年%2$s月</string>
+    <string name="outer_title">%1$年%2$s月</string>
+    <string name="text_outer_title">%1$s-%2$s</string>
 </resources>
