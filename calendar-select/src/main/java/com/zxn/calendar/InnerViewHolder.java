@@ -110,8 +110,8 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
         int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
         leftView.setBackgroundColor(color);
         rightView.setBackgroundColor(color);
-        int textColor = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_dbdbdb);
-        date.setTextColor(textColor);
+
+
         date.setBackgroundColor(Color.TRANSPARENT);
         if (tempCalendar.getTimeInMillis() == todayCalendar.getTimeInMillis()) {
             date.setText(Util.fillZero(dayTimeEntity.day));
@@ -121,6 +121,16 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             date.setText(Util.fillZero(dayTimeEntity.day));
             dot.setVisibility(View.GONE);
         }
+
+//        if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+//                || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+//            int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
+//            date.setTextColor(textColor);
+//        } else {
+//            int textColor = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_dbdbdb);
+//            date.setTextColor(textColor);
+//        }
+
     }
 
     private void updateDayIsZeroView() {
@@ -147,6 +157,15 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
                 date.setText(Util.fillZero(entity.day));
                 responseToRange(entity, isToday);
             }
+        }
+
+        if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
+            date.setTextColor(textColor);
+        } else {
+            //int textColor = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_dbdbdb);
+            //date.setTextColor(textColor);
         }
     }
 
@@ -185,7 +204,7 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             if (null == mSelectBgDrawable) {
                 dot.setBackgroundResource(R.drawable.global_drawable_circle_select);
             } else {
-                dot.setBackground(mSelectBgDrawable);
+                dot.setBackgroundDrawable(mSelectBgDrawable);
 //                dot.setBackgroundDrawable(mSelectBgDrawable);
             }
         } else {
@@ -212,7 +231,7 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             if (null == mSelectBgDrawable) {
                 date.setBackgroundResource(R.drawable.global_drawable_circle_select);
             } else {
-                date.setBackground(mSelectBgDrawable);
+                date.setBackgroundDrawable(mSelectBgDrawable);
             }
             date.setTextColor(Color.WHITE);
             dot.setVisibility(View.GONE);
@@ -241,6 +260,7 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
     }
 
     private int mIntervalSelectBgColor;
+
     public void setIntervalSelectBgColor(int color) {
         this.mIntervalSelectBgColor = color;
     }
