@@ -1,6 +1,8 @@
 package com.zxn.calendar;
 
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -10,17 +12,20 @@ import java.util.Calendar;
 
 public class DateOnclickListener implements View.OnClickListener {
 
-    private int                 selectType;
-    private DayTimeEntity       startDayTime;
-    private DayTimeEntity       endDayTime;
+    private static final String TAG = "DateOnclickListener";
+    private int selectType;
+    private DayTimeEntity startDayTime;
+    private DayTimeEntity endDayTime;
     private OuterRecycleAdapter outAdapter;
-    private DayTimeEntity       timeEntity;
+    private DayTimeEntity timeEntity;
+    private int mMaxSeparatedDays;
 
     public DateOnclickListener(int selectType, DayTimeEntity startDayTime, DayTimeEntity endDayTime, OuterRecycleAdapter adapter) {
         this.selectType = selectType;
         this.startDayTime = startDayTime;
         this.endDayTime = endDayTime;
         this.outAdapter = adapter;
+        this.mMaxSeparatedDays = adapter.getMaxSelectDays();
     }
 
     @Override
@@ -59,10 +64,10 @@ public class DateOnclickListener implements View.OnClickListener {
         if (endDayTime.day != 0 && startDayTime.day == 0) {
             responseEndNotZero(timeEntity, timeEntityCalendar, tempCalendar);
         } else if (startDayTime.day == 0 && endDayTime.day == 0) {
-            responseBothZero(timeEntity);
+            responseBothZero(timeEntity);   //
         } else if (startDayTime.day != 0 && endDayTime.day == 0) {
-            responseStartNotZero(timeEntity, timeEntityCalendar, tempCalendar);
-        } else if (startDayTime.day != 0 && endDayTime.day != 0) {
+            responseStartNotZero(timeEntity, timeEntityCalendar, tempCalendar);//已经有一个选中后的点击.
+        } else if (startDayTime.day != 0 && endDayTime.day != 0) {      //两个都选中后的点击.
             responseBothNotZero(timeEntity);
         }
     }
@@ -82,6 +87,16 @@ public class DateOnclickListener implements View.OnClickListener {
         tempCalendar.set(Calendar.MONTH, startDayTime.month);
         tempCalendar.set(Calendar.DATE, startDayTime.day);
         if (timeEntityCalendar.getTimeInMillis() > tempCalendar.getTimeInMillis()) {
+            //选中的第二个日期大于了第一个选中的日期了-->
+
+            //比较两个时间相差的天数.
+            int separatedDays = Util.getSeparatedDays(tempCalendar.getTimeInMillis(), timeEntityCalendar.getTimeInMillis());
+            Log.i(TAG, "responseStartNotZero:mMaxSeparatedDays---> " + mMaxSeparatedDays);
+            Log.i(TAG, "responseStartNotZero:separatedDays---> " + separatedDays);
+            if (mMaxSeparatedDays != 0 && separatedDays > mMaxSeparatedDays) {
+                //选择的两个时间间隔大于指定最大间隔天数后,置零.
+                return;
+            }
             endDayTime.year = timeEntity.year;
             endDayTime.month = timeEntity.month;
             endDayTime.monthPosition = timeEntity.monthPosition;

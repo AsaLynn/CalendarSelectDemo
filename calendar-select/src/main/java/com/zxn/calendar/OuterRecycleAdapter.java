@@ -26,6 +26,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     DayTimeEntity endDayTime;
     int selectType;
     public CalendarSelectUpdateCallback multCallback;
+    private int mMaxSelectDays;
 
     public OuterRecycleAdapter(List<Object> list, int selectType,
                                Calendar startCalendarDate, Calendar endCalendarDate,
@@ -109,6 +110,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.global_recycler_item_inner, parent, false);
             InnerViewHolder holder = new InnerViewHolder(view, startCalendarDate, endCalendarDate, startDayTime, endDayTime);
             DateOnclickListener listener = new DateOnclickListener(selectType, startDayTime, endDayTime, this);
+
             holder.itemView.setOnClickListener(listener);
             holder.itemView.setTag(listener);
             holder.setSelectBgDrawable(mSelectBgDrawable);
@@ -187,7 +189,16 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private int mIntervalSelectBgColor;
+
     public void setIntervalSelectBgColor(int color) {
         this.mIntervalSelectBgColor = color;
+    }
+
+    public void setMaxSelectDays(int days) {
+        this.mMaxSelectDays = days;
+    }
+
+    public int getMaxSelectDays() {
+        return mMaxSelectDays;
     }
 }

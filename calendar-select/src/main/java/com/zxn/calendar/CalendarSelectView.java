@@ -2,7 +2,6 @@ package com.zxn.calendar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.Map;
@@ -36,13 +34,13 @@ public class CalendarSelectView extends LinearLayout {
     private final int END = 2;
 
 
-    private TextView leftTime;
-    private TextView rightTime;
+    //    private TextView leftTime;
+//    private TextView rightTime;
     private RecyclerView recyclerView;
-    private TextView define;
-    private LinearLayout timeParent;
-    private TextView clear;
-    private TextView confirm;
+    //    private TextView define;
+//    private LinearLayout timeParent;
+    //    private TextView clear;
+//    private TextView confirm;
     private OuterRecycleAdapter outAdapter;
 
     private int selectType;
@@ -77,6 +75,7 @@ public class CalendarSelectView extends LinearLayout {
     private Drawable mSelectBgDrawable;
     private Drawable mIntervalSelectBgDrawable;
     private int mIntervalSelectBgColor;
+    private int mMaxSelectDays;
 
     public CalendarSelectView(Context context) {
         this(context, null);
@@ -133,13 +132,14 @@ public class CalendarSelectView extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.global_view_calendar_select, this, true);
         int color = ContextCompat.getColor(context, R.color.day_mode_background_color);
         setBackgroundColor(color);
-        leftTime = findViewById(R.id.left_time);
-        rightTime = findViewById(R.id.right_time);
         recyclerView = findViewById(R.id.recycleView);
-        define = findViewById(R.id.define);
-        timeParent = findViewById(R.id.time_parent);
-        clear = findViewById(R.id.clear);
-        confirm = findViewById(R.id.confirm);
+
+//        leftTime = findViewById(R.id.left_time);
+//        rightTime = findViewById(R.id.right_time);
+//        define = findViewById(R.id.define);
+//        timeParent = findViewById(R.id.time_parent);
+//        clear = findViewById(R.id.clear);
+////        confirm = findViewById(R.id.confirm);
     }
 
     private void initAdapter() {
@@ -170,6 +170,7 @@ public class CalendarSelectView extends LinearLayout {
         outAdapter.setSelectBgDrawable(mSelectBgDrawable);
         outAdapter.setIntervalSelectBgDrawable(mIntervalSelectBgDrawable);
         outAdapter.setIntervalSelectBgColor(mIntervalSelectBgColor);
+        outAdapter.setMaxSelectDays(mMaxSelectDays);
 
         outAdapter.setUpdateMultCallback(multCallback);
         recyclerView.setAdapter(outAdapter);
@@ -180,12 +181,13 @@ public class CalendarSelectView extends LinearLayout {
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.calendarSelect);
             selectType = array.getInt(R.styleable.calendarSelect_select_type, SINGLE);
-            updateViewVisibility();
+            //updateViewVisibility();
             locationType = array.getInt(R.styleable.calendarSelect_locate_position, START);
             updateDayTimeEntity();
             mSelectBgDrawable = array.getDrawable(R.styleable.calendarSelect_select_bg);
             mIntervalSelectBgDrawable = array.getDrawable(R.styleable.calendarSelect_interval_select_bg);
             mIntervalSelectBgColor = array.getColor(R.styleable.calendarSelect_interval_select_color, ContextCompat.getColor(getContext(), R.color.day_mode_backround_1a1482f0));
+            mMaxSelectDays = array.getInt(R.styleable.calendarSelect_max_select_days, 0);
             array.recycle();
         }
     }
@@ -224,9 +226,12 @@ public class CalendarSelectView extends LinearLayout {
         updateMultView();
     }
 
+    /**
+     * 日期选择结果.
+     */
     private void updateMultView() {
         if (selectType == MULT) {
-            if (startDayTime.day != 0) {
+            /*if (startDayTime.day != 0) {
                 leftTime.setText(startDayTime.year + "-" + Util.fillZero(startDayTime.month + 1) + "-" + Util.fillZero(startDayTime.day));
             } else {
                 leftTime.setText("起始日期");
@@ -246,7 +251,7 @@ public class CalendarSelectView extends LinearLayout {
                 }
             } else {
                 rightTime.setText("结束日期");
-            }
+            }*/
         }
     }
 
@@ -293,47 +298,50 @@ public class CalendarSelectView extends LinearLayout {
         }
     }
 
-    private void updateViewVisibility() {
-        if (selectType == SINGLE) {
-            define.setVisibility(View.GONE);
-            timeParent.setVisibility(View.GONE);
-            clear.setVisibility(View.GONE);
-        } else if (selectType == MULT) {
-            define.setVisibility(View.VISIBLE);
-            timeParent.setVisibility(View.VISIBLE);
-            clear.setVisibility(View.VISIBLE);
-        }
-    }
+//    private void updateViewVisibility() {
+//        if (selectType == SINGLE) {
+////            define.setVisibility(View.GONE);
+//            //timeParent.setVisibility(View.GONE);
+////            clear.setVisibility(View.GONE);
+//        } else if (selectType == MULT) {
+////            define.setVisibility(View.VISIBLE);
+//            //timeParent.setVisibility(View.VISIBLE);
+////            clear.setVisibility(View.VISIBLE);
+//        }
+//    }
 
+    /**
+     * 日期结果
+     */
     private void addListener() {
-        clear.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startDayTime.day = 0;
-                endDayTime.day = 0;
-                startDayTime.listPosition = -1;
-                startDayTime.monthPosition = -1;
-                endDayTime.listPosition = -1;
-                endDayTime.monthPosition = -1;
-                leftTime.setText("起始时间");
-                rightTime.setText("结束时间");
-                if (outAdapter != null)
-                    outAdapter.notifyDataSetChanged();
-            }
-        });
-
-        confirm.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectDateCallback != null) {
-                    if (selectType == SINGLE)
-                        selectDateCallback.selectSingleDate(startDayTime);
-                    else if (selectType == MULT) {
-                        selectDateCallback.selectMultDate(startDayTime, endDayTime);
-                    }
-                }
-            }
-        });
+//        clear.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startDayTime.day = 0;
+//                endDayTime.day = 0;
+//                startDayTime.listPosition = -1;
+//                startDayTime.monthPosition = -1;
+//                endDayTime.listPosition = -1;
+//                endDayTime.monthPosition = -1;
+//                leftTime.setText("起始时间");
+//                rightTime.setText("结束时间");
+//                if (outAdapter != null)
+//                    outAdapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//        confirm.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (selectDateCallback != null) {
+//                    if (selectType == SINGLE)
+//                        selectDateCallback.selectSingleDate(startDayTime);
+//                    else if (selectType == MULT) {
+//                        selectDateCallback.selectMultDate(startDayTime, endDayTime);
+//                    }
+//                }
+//            }
+//        });
     }
 
     public void setConfirmCallback(ConfirmSelectDateCallback selectDateCallback) {

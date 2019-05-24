@@ -4,13 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/tv_select_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent" />
+
     <com.zxn.calendar.CalendarSelectView
         android:id="@+id/calendar_select"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/tv_select_result"
         android:clickable="true"
         app:interval_select_color="@color/c_ff9800"
         app:locate_position="today"
+        app:max_select_days="7"
         app:select_bg="@drawable/bg_sp_circle_c_fa753a_select"
         app:select_type="mult" />
 </RelativeLayout>

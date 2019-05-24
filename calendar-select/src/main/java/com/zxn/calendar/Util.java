@@ -11,15 +11,60 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by richzjc on 18/3/13.
+ * Updated by zxn on 2019/5/24.
  */
-
 public class Util {
+
+    /**
+     * 获取两个日期相差的天数.
+     *
+     * @param oldDate 最早日期.
+     * @param newDate 最晚日期.
+     * @return 两个日期相差的天数
+     */
+    public static int getSeparatedDays(Date oldDate, Date newDate) {
+        Calendar oldCalendar = Calendar.getInstance();
+        oldCalendar.setTime(oldDate);
+
+        Calendar newCalendar = Calendar.getInstance();
+        newCalendar.setTime(newDate);
+
+        int oldDay = oldCalendar.get(Calendar.DAY_OF_YEAR);
+        int newDay = newCalendar.get(Calendar.DAY_OF_YEAR);
+
+        int oldYear = oldCalendar.get(Calendar.YEAR);
+        int newYear = newCalendar.get(Calendar.YEAR);
+        if (oldYear != newYear) {//同一年
+            int timeDistance = 0;
+            for (int i = oldYear; i < newYear; i++) {
+                if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {    //闰年
+                    timeDistance += 366;
+                } else {  //不是闰年
+                    timeDistance += 365;
+                }
+            }
+            return timeDistance + (newDay - oldDay);
+        } else { //不同年
+            return newDay - oldDay;
+        }
+    }
+
+    /**
+     * 比较两个时间戳相差的天数.
+     *
+     * @param oldStamp 毫秒时间戳之前的
+     * @param newStamp 毫秒时间戳之后的
+     * @return 相差的天数
+     */
+    public static int getSeparatedDays(long oldStamp, long newStamp) {
+        return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
+    }
 
     private static List<MonthTimeEntity> initMonthList(Calendar startCalendar, Calendar endCalendar) {
         List<MonthTimeEntity> monthTimeEntities = new ArrayList<>();
