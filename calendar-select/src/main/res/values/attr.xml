@@ -14,5 +14,6 @@
         <attr name="interval_select_bg" format="reference" />
         <attr name="interval_select_color" format="color" />
         <attr name="max_select_days" format="integer" />
+        <attr name="weekend_color" format="color" />
     </declare-styleable>
 </resources>

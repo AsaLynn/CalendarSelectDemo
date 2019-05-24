@@ -27,6 +27,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     int selectType;
     public CalendarSelectUpdateCallback multCallback;
     private int mMaxSelectDays;
+    private int mWeekendColor;
 
     public OuterRecycleAdapter(List<Object> list, int selectType,
                                Calendar startCalendarDate, Calendar endCalendarDate,
@@ -116,6 +117,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.setSelectBgDrawable(mSelectBgDrawable);
             holder.setIntervalSelectBgDrawable(mSelectBgDrawable);
             holder.setIntervalSelectBgColor(mIntervalSelectBgColor);
+            holder.setWeekendColor(mWeekendColor);
             return holder;
         }
     }
@@ -200,5 +202,9 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public int getMaxSelectDays() {
         return mMaxSelectDays;
+    }
+
+    public void setWeekendColor(int color) {
+        this.mWeekendColor = color;
     }
 }

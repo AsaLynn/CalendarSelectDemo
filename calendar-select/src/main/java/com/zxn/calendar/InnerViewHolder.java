@@ -158,15 +158,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
                 responseToRange(entity, isToday);
             }
         }
-
-        if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-                || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
-            date.setTextColor(textColor);
-        } else {
-            //int textColor = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_dbdbdb);
-            //date.setTextColor(textColor);
-        }
     }
 
     private void responseToRange(DayTimeEntity entity, boolean isToday) {
@@ -240,11 +231,25 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_1482f0);
             date.setTextColor(color);
             dot.setVisibility(View.VISIBLE);
+
+            if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                    || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+//                int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
+//                date.setTextColor(textColor);
+                date.setTextColor(mWeekendColor);
+            }
         } else {
             color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color);
             date.setTextColor(color);
             date.setBackgroundColor(Color.TRANSPARENT);
             dot.setVisibility(View.GONE);
+
+            if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
+                    || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+//                int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
+//                date.setTextColor(textColor);
+                date.setTextColor(mWeekendColor);
+            }
         }
     }
 
@@ -263,5 +268,11 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
 
     public void setIntervalSelectBgColor(int color) {
         this.mIntervalSelectBgColor = color;
+    }
+
+    private int mWeekendColor;
+
+    public void setWeekendColor(int color) {
+        mWeekendColor = color;
     }
 }

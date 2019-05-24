@@ -77,6 +77,7 @@ public class CalendarSelectView extends LinearLayout {
     private int mIntervalSelectBgColor;
     private int mMaxSelectDays;
     private Calendar mTodaycalendar;
+    private int mWeekendColor;
 
     public CalendarSelectView(Context context) {
         this(context, null);
@@ -172,6 +173,8 @@ public class CalendarSelectView extends LinearLayout {
         outAdapter.setIntervalSelectBgDrawable(mIntervalSelectBgDrawable);
         outAdapter.setIntervalSelectBgColor(mIntervalSelectBgColor);
         outAdapter.setMaxSelectDays(mMaxSelectDays);
+        outAdapter.setWeekendColor(mWeekendColor);
+
 
         outAdapter.setUpdateMultCallback(multCallback);
         recyclerView.setAdapter(outAdapter);
@@ -189,6 +192,7 @@ public class CalendarSelectView extends LinearLayout {
             mIntervalSelectBgDrawable = array.getDrawable(R.styleable.calendarSelect_interval_select_bg);
             mIntervalSelectBgColor = array.getColor(R.styleable.calendarSelect_interval_select_color, ContextCompat.getColor(getContext(), R.color.day_mode_backround_1a1482f0));
             mMaxSelectDays = array.getInt(R.styleable.calendarSelect_max_select_days, 0);
+            mWeekendColor = array.getColor(R.styleable.calendarSelect_weekend_color, ContextCompat.getColor(getContext(), R.color.day_mode_text_color));
             array.recycle();
         }
     }
