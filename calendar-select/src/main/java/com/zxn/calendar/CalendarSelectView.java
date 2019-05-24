@@ -76,6 +76,7 @@ public class CalendarSelectView extends LinearLayout {
     private Drawable mIntervalSelectBgDrawable;
     private int mIntervalSelectBgColor;
     private int mMaxSelectDays;
+    private Calendar mTodaycalendar;
 
     public CalendarSelectView(Context context) {
         this(context, null);
@@ -193,16 +194,16 @@ public class CalendarSelectView extends LinearLayout {
     }
 
     private void updateDayTimeEntity() {
-        if (locationType == TODAY) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            if (calendar.getTimeInMillis() <= endCalendarDate.getTimeInMillis()) {
-                endDayTime.year = calendar.get(Calendar.YEAR);
-                endDayTime.month = calendar.get(Calendar.MONTH);
-                endDayTime.day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (locationType == TODAY) {//TODAY
+            mTodaycalendar = Calendar.getInstance();
+            mTodaycalendar.set(Calendar.HOUR_OF_DAY, 0);
+            mTodaycalendar.set(Calendar.MINUTE, 0);
+            mTodaycalendar.set(Calendar.SECOND, 0);
+            mTodaycalendar.set(Calendar.MILLISECOND, 0);
+            if (mTodaycalendar.getTimeInMillis() <= endCalendarDate.getTimeInMillis()) {
+                endDayTime.year = mTodaycalendar.get(Calendar.YEAR);
+                endDayTime.month = mTodaycalendar.get(Calendar.MONTH);
+                endDayTime.day = mTodaycalendar.get(Calendar.DAY_OF_MONTH);
             } else {
                 endDayTime.year = endCalendarDate.get(Calendar.YEAR);
                 endDayTime.month = endCalendarDate.get(Calendar.MONTH);
@@ -255,6 +256,14 @@ public class CalendarSelectView extends LinearLayout {
         }
     }
 
+    /**
+     * 更改控件的时间区间
+     *
+     * @param startCalendar 该控件展示的起始月份
+     * @param endCalendar   该控件展示的结束月份
+     * @param startDayTime  控制能点击的日期，只有在startDayTime 和 endDayTime之前的日期是可点击的
+     * @param endDayTime    控制能点击的日期，只有在startDayTime 和 endDayTime之前的日期是可点击的
+     */
     public void setCalendarRange(Calendar startCalendar, Calendar endCalendar, DayTimeEntity startDayTime, DayTimeEntity endDayTime) {
         if (startCalendar == null || endCalendar == null)
             throw new IllegalStateException("传入的日历是不能为空的");
@@ -367,5 +376,14 @@ public class CalendarSelectView extends LinearLayout {
                 outRect.top = 0;
             }
         }
+    }
+
+    /**
+     * 获取当前年份和月份,日期.
+     *
+     * @return 年份和月份, 日期.
+     */
+    public DayTimeEntity getTodyDayTime() {
+        return new DayTimeEntity(mTodaycalendar.get(Calendar.YEAR), mTodaycalendar.get(Calendar.MONTH), mTodaycalendar.get(Calendar.DAY_OF_MONTH), 0, 0);
     }
 }

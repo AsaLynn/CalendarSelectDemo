@@ -1,31 +1,34 @@
 # Calendar_Select
 
-日历选择这个库支持单选日期以及选择时间段，
+日历选择这个库支持单选日期以及选择时间段，可以设置时间段的天数,
 并且可以设置第一次进入 是选中第一天，还是当天， 还是最后一天。
 废话少说了，直接上效果图
 
 # 效果图
 
-![](single.gif)
+[图片上传失败...(image-3e98db-1558712065753)]
 
-![](mult.gif)
-#下载
-
-    implementation 'com.richzjc:calendar_select:1.0.0'
-
+[图片上传失败...(image-68421f-1558712065753)]
+#AS下载
+```
+implementation 'com.zxn.calendar:calendar-select:1.0.0'
+```
 # 使用
 
 **示例**
-
-    <com.rich.library.CalendarSelectView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/calendar_select"
-            android:clickable="true"
-            app:locate_position="today"
-            app:select_type="mult">
-
-    
+```
+<com.zxn.calendar.CalendarSelectView
+    android:id="@+id/calendar_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/tv_select_result"
+    android:clickable="true"
+    app:interval_select_color="@color/c_ff9800"
+    app:locate_position="today"
+    app:max_select_days="7"
+    app:select_bg="@drawable/bg_sp_circle_c_fa753a_select"
+    app:select_type="mult" />
+```
 select_type 属性有如下：
 * mult（选择时间段）
 * single （单选日期）
@@ -35,34 +38,47 @@ locate_position属性如下：
 * today（初始选中当天，如果当天不在范围之内，则选中最后一天）
 * end （初始选中最后一天）
 
+max_select_days属性:设置时间段的最大天数间隔.
+
 获取选中的日期 以及区间段，`只需要给当前控件设置这个callback即可`
+```
+scvCalendar.setConfirmCallback(new ConfirmSelectDateCallback() {
+    @Override
+    public void selectSingleDate(DayTimeEntity timeEntity) {
+        titleCommon.setTitleText(timeEntity.year + "年" + timeEntity.month);
+    }
 
-    ConfirmSelectDateCallback selectDateCallback = new ConfirmSelectDateCallback() {
-            @Override
-            public void selectSingleDate(DayTimeEntity timeEntity) {
-                //TODO 单选回调此方法
-            }
-            
-            @Override
-            public void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity) {
-                //TODO 选择时间段回调些方法
-            }
-        };
-        
-`调用此方法： setConfirmCallback(selectDateCallback);`
-        
-该控件默认的时间区间是： 向前一年，向后三个月， 如果需要更改控件的时间区间，请调用如下方法：
-   
-    setCalendarRange(Calendar startCalendar, Calendar endCalendar, DayTimeEntity startDayTime, DayTimeEntity endDayTime) 
-   
-**参数说明**
-   
-startCalendar: 该控件展示的起始月份
+    @Override
+    public void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity) {
 
-endCalendar: 该控件展示的结束月份
+    }
+});
+```
 
-startDayTime: 控制能点击的日期，只有在startDayTime 和 endDayTime之前的日期是可点击的
-
-endDayTime: 控制能点击的日期，只有在startDayTime 和 endDayTime之前的日期是可点击的
-    
-**欢迎各位fork 和 star**
+该控件默认的时间区间是：
+向前一年，向后三个月，
+如果需要更改控件的时间区间，请调用如下方法：
+```
+/**
+ * 更改控件的时间区间
+ *
+ * @param startCalendar 该控件展示的起始月份
+ * @param endCalendar   该控件展示的结束月份
+ * @param startDayTime  控制能点击的日期，只有在startDayTime 和 endDayTime之前的日期是可点击的
+ * @param endDayTime    控制能点击的日期，只有在startDayTime 和 endDayTime之前的日期是可点击的
+ */
+public void setCalendarRange(Calendar startCalendar, Calendar endCalendar, DayTimeEntity startDayTime, DayTimeEntity endDayTime) {
+    if (startCalendar == null || endCalendar == null)
+        throw new IllegalStateException("传入的日历是不能为空的");
+    else if (endCalendar.getTimeInMillis() < startCalendar.getTimeInMillis())
+        throw new IllegalStateException("结束日期不能早于开始日期");
+    else {
+        this.startCalendarDate.setTimeInMillis(startCalendar.getTimeInMillis());
+        this.endCalendarDate.setTimeInMillis(endCalendar.getTimeInMillis());
+        initStartEndCalendar();
+        setStartEndTime(startDayTime, endDayTime);
+        if (outAdapter != null)
+            outAdapter.setData(Util.getTotalCount(startCalendar, endCalendar));
+    }
+}
+```

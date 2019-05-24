@@ -6,6 +6,4 @@
     android:layout_height="match_parent"
     android:clickable="true"
     app:locate_position="today"
-    app:select_type="single">
-
-</com.zxn.calendar.CalendarSelectView>
+    app:select_type="single" />
