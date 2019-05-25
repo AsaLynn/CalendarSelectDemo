@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, CalendarSelectAcitivity.class);
+                        Intent intent = new Intent(MainActivity.this, SingleCalendarAcitivity.class);
                         intent.putExtra("flag", "single");
                         startActivity(intent);
                     }
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(MainActivity.this, CalendarSelectAcitivity.class);
+                        Intent intent = new Intent(MainActivity.this, MultCalendarAcitivity.class);
                         intent.putExtra("flag", "mult1");
                         startActivity(intent);
                     }

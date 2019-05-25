@@ -12,5 +12,11 @@
         android:text="2018年3月"
         android:textColor="@color/day_mode_text_color"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="normal" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@id/plan_time_txt_month"
+        android:background="@color/day_mode_color_e6e6e6" />
 </RelativeLayout>

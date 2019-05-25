@@ -62,7 +62,7 @@ public class DateOnclickListener implements View.OnClickListener {
         timeEntityCalendar.set(Calendar.MONTH, timeEntity.month);
         timeEntityCalendar.set(Calendar.DATE, timeEntity.day);
         if (endDayTime.day != 0 && startDayTime.day == 0) {
-            responseEndNotZero(timeEntity, timeEntityCalendar, tempCalendar);
+            responseEndNotZero(timeEntity, timeEntityCalendar, tempCalendar);//首次点击已经有一个选中后的点击.
         } else if (startDayTime.day == 0 && endDayTime.day == 0) {
             responseBothZero(timeEntity);   //
         } else if (startDayTime.day != 0 && endDayTime.day == 0) {
@@ -95,6 +95,7 @@ public class DateOnclickListener implements View.OnClickListener {
             Log.i(TAG, "responseStartNotZero:separatedDays---> " + separatedDays);
             if (mMaxSeparatedDays != 0 && separatedDays > mMaxSeparatedDays) {
                 //选择的两个时间间隔大于指定最大间隔天数后,置零.
+                outAdapter.multCallback.onMultSelectedError(separatedDays, mMaxSeparatedDays);
                 return;
             }
             endDayTime.year = timeEntity.year;
@@ -161,6 +162,15 @@ public class DateOnclickListener implements View.OnClickListener {
             endDayTime.day = timeEntity.day;
             endDayTime.listPosition = timeEntity.listPosition;
         } else {
+            //比较两个时间相差的天数.
+            int separatedDays = Util.getSeparatedDays(tempCalendar.getTimeInMillis(), timeEntityCalendar.getTimeInMillis());
+            Log.i(TAG, "responseEndNotZero:mMaxSeparatedDays---> " + mMaxSeparatedDays);
+            Log.i(TAG, "responseEndNotZero:separatedDays---> " + separatedDays);
+            if (mMaxSeparatedDays != 0 && separatedDays > mMaxSeparatedDays) {
+                //选择的两个时间间隔大于指定最大间隔天数后,置零.
+                outAdapter.multCallback.onMultSelectedError(separatedDays, mMaxSeparatedDays);
+                return;
+            }
             startDayTime.year = timeEntity.year;
             startDayTime.month = timeEntity.month;
             startDayTime.monthPosition = timeEntity.monthPosition;

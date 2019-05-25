@@ -1,13 +1,23 @@
 package com.rich.calendar;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.zxn.calendar.CalendarSelectView;
+import com.zxn.calendar.DayTimeEntity;
+
+import java.util.Calendar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CalendarSelectAcitivity extends AppCompatActivity {
 
+
+    @BindView(R.id.calendar_select)
+    CalendarSelectView calendarSelect;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,5 +30,35 @@ public class CalendarSelectAcitivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.select_date_mult2);
         }
+        ButterKnife.bind(this);
+
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.add(Calendar.YEAR, -1);
+        startCalendar.add(Calendar.MONTH, -1);
+        //startCalendar.set(Calendar.DATE, 1);
+
+        Calendar endCalendar= Calendar.getInstance();
+//        endCalendar.set(Calendar.DATE, 1);
+        //endCalendar.add(Calendar.MONTH, 1);
+        //endCalendar.add(Calendar.DATE, -1);
+
+
+        DayTimeEntity startDayTime = new DayTimeEntity(startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), 0, 0, 0);
+        DayTimeEntity endDayTime
+                = new DayTimeEntity(endCalendar.get(Calendar.YEAR),
+                endCalendar.get(Calendar.MONTH),
+                endCalendar.get(Calendar.DAY_OF_MONTH),
+                0,
+                0);
+        calendarSelect.setCalendarRange(startCalendar,endCalendar,startDayTime,endDayTime);
+
+
+//        Calendar startCalendar = Calendar.getInstance();
+//        startCalendar.add(Calendar.MONTH, -1);
+//        startCalendar.set(Calendar.DATE, 1);
+//        calendarSelect.setCalendarRange(startCalendar);
+
+        //SelectMultAcitivity
+
     }
 }

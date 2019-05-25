@@ -121,15 +121,7 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             date.setText(Util.fillZero(dayTimeEntity.day));
             dot.setVisibility(View.GONE);
         }
-
-//        if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
-//                || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-//            int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
-//            date.setTextColor(textColor);
-//        } else {
-//            int textColor = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_dbdbdb);
-//            date.setTextColor(textColor);
-//        }
+        date.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_b3b3b3));
 
     }
 
@@ -231,7 +223,9 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_1482f0);
             date.setTextColor(color);
             dot.setVisibility(View.VISIBLE);
-
+            if (null != mSelectBgDrawable){
+                dot.setBackgroundDrawable(mSelectBgDrawable);
+            }
             if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
                     || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 //                int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);

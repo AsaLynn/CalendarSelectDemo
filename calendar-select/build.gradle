@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.4"
 
 
     }
@@ -34,7 +34,7 @@ def siteUrl = 'https://github.com/zhang721688/CalendarSelectDemo'
 def gitUrl = 'https://github.com/zhang721688/CalendarSelectDemo.git'
 def libName = "calendar-select"
 group = "com.zxn.calendar"
-version = "1.0.3"
+version = "1.0.4"
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'

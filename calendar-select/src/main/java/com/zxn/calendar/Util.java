@@ -49,9 +49,10 @@ public class Util {
                     timeDistance += 365;
                 }
             }
-            return timeDistance + (newDay - oldDay);
+
+            return Math.abs(timeDistance + (newDay - oldDay));
         } else { //不同年
-            return newDay - oldDay;
+            return Math.abs(newDay - oldDay);
         }
     }
 

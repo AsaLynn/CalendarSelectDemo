@@ -6,7 +6,16 @@ package com.zxn.calendar;
  */
 
 public interface CalendarSelectUpdateCallback {
+
+    @Deprecated
     void updateMultView();
 
     void refreshLocate(int position);
+
+    /**
+     * 勾选多天时候的错误回调.
+     *
+     * @param days 开始日期结束日期相差的天数.
+     */
+    void onMultSelectedError(int days, int maxDays);
 }

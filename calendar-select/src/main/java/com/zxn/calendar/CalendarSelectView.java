@@ -71,7 +71,31 @@ public class CalendarSelectView extends LinearLayout {
                 e.printStackTrace();
             }
         }
+
+        @Override
+        public void onMultSelectedError(int days, int maxDays) {
+            if (null != mMultSelectedErrorCallback) {
+                mMultSelectedErrorCallback.onMultSelectedError(days, maxDays);
+            }
+        }
     };
+    private MultSelectedErrorCallback mMultSelectedErrorCallback;
+
+    public interface MultSelectedErrorCallback {
+
+        /**
+         * 选择天数间隔错误的回调.
+         *
+         * @param days    开始时间间隔和结束时间的实际天数间隔.
+         * @param maxDays 开始时间间隔和结束时间的最大天数间隔.
+         */
+        void onMultSelectedError(int days, int maxDays);
+    }
+
+    public void setMultSelectedErrorCallback(MultSelectedErrorCallback callback) {
+        this.mMultSelectedErrorCallback = callback;
+    }
+
     private Drawable mSelectBgDrawable;
     private Drawable mIntervalSelectBgDrawable;
     private int mIntervalSelectBgColor;
@@ -105,7 +129,7 @@ public class CalendarSelectView extends LinearLayout {
         startCalendarDate.add(Calendar.YEAR, -1);
         startCalendarDate.set(Calendar.DATE, 1);
         endCalendarDate = Calendar.getInstance();
-        endCalendarDate.add(Calendar.MONTH, 3);
+        //endCalendarDate.add(Calendar.MONTH, 3);
         endCalendarDate.set(Calendar.DATE, 1);
         endCalendarDate.add(Calendar.MONTH, 1);
         endCalendarDate.add(Calendar.DATE, -1);
@@ -234,8 +258,11 @@ public class CalendarSelectView extends LinearLayout {
     /**
      * 日期选择结果.
      */
+    @Deprecated
     private void updateMultView() {
         if (selectType == MULT) {
+
+
             /*if (startDayTime.day != 0) {
                 leftTime.setText(startDayTime.year + "-" + Util.fillZero(startDayTime.month + 1) + "-" + Util.fillZero(startDayTime.day));
             } else {
@@ -270,6 +297,26 @@ public class CalendarSelectView extends LinearLayout {
      */
     public void setCalendarRange(Calendar startCalendar, Calendar endCalendar, DayTimeEntity startDayTime, DayTimeEntity endDayTime) {
         if (startCalendar == null || endCalendar == null)
+            throw new IllegalStateException("传入的日历是不能为空的");
+        else if (endCalendar.getTimeInMillis() < startCalendar.getTimeInMillis())
+            throw new IllegalStateException("结束日期不能早于开始日期");
+        else {
+            this.startCalendarDate.setTimeInMillis(startCalendar.getTimeInMillis());
+            this.endCalendarDate.setTimeInMillis(endCalendar.getTimeInMillis());
+            initStartEndCalendar();
+            setStartEndTime(startDayTime, endDayTime);
+            if (outAdapter != null)
+                outAdapter.setData(Util.getTotalCount(startCalendar, endCalendar));
+        }
+    }
+
+    /**
+     * 更改控件的时间区间
+     *
+     * @param startCalendar 该控件展示的起始月份
+     */
+    public void setCalendarRange(Calendar startCalendar) {
+        if (startCalendar == null)
             throw new IllegalStateException("传入的日历是不能为空的");
         else if (endCalendar.getTimeInMillis() < startCalendar.getTimeInMillis())
             throw new IllegalStateException("结束日期不能早于开始日期");
@@ -389,5 +436,27 @@ public class CalendarSelectView extends LinearLayout {
      */
     public DayTimeEntity getTodyDayTime() {
         return new DayTimeEntity(mTodaycalendar.get(Calendar.YEAR), mTodaycalendar.get(Calendar.MONTH), mTodaycalendar.get(Calendar.DAY_OF_MONTH), 0, 0);
+    }
+
+    public DayTimeEntity getStartDayTime() {
+        return startDayTime;
+    }
+
+    public DayTimeEntity getEndDayTime() {
+        return endDayTime;
+    }
+
+    /**
+     * 获取Calendar
+     *
+     * @param year  年份
+     * @param month 月份,比实际月份小1
+     * @param date  日期
+     * @return 指定年月日的Calendar
+     */
+    public static Calendar getCalendar(int year, int month, int date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date);
+        return calendar;
     }
 }

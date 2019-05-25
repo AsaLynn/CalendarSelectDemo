@@ -4,12 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by richzjc on 18/3/13.
+ * Updated by zxn on 2019/5/25.
  */
-
 public class DayTimeEntity implements Parcelable {
     public int day;
-    public int month;
+    public int month;//展示实际月份时候,要+1.
     public int year;
     public int listPosition;
     public int monthPosition;

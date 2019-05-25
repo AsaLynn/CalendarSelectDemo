@@ -5,9 +5,28 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_select_result"
-        android:layout_width="match_parent"
+        android:text="01"
+        android:id="@+id/tv_select_start"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:text="02"
+        android:id="@+id/tv_select_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_select_start"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:text="确定"
+        android:id="@+id/tv_select_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:padding="10dp"
         android:textColor="@color/colorAccent" />
 
@@ -15,11 +34,11 @@
         android:id="@+id/calendar_select"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_select_result"
+        android:layout_below="@id/tv_select_end"
         android:clickable="true"
-        app:interval_select_color="@color/c_ff9800"
+        app:interval_select_color="@color/c_66ff9800"
         app:locate_position="today"
-        app:max_select_days="7"
+        app:max_select_days="6"
         app:select_bg="@drawable/bg_sp_circle_c_fa753a_select"
         app:select_type="mult" />
 </RelativeLayout>
