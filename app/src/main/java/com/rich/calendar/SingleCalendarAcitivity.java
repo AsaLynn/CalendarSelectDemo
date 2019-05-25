@@ -42,9 +42,11 @@ public class SingleCalendarAcitivity extends AppCompatActivity {
 //        calendarSelect.setCalendarRange(startCalendar,endCalendar,startDayTime,endDayTime);
 
 
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.add(Calendar.MONTH, -1);
-        startCalendar.set(Calendar.DATE, 1);
+        //Calendar startCalendar = Calendar.getInstance();
+        //从本年上个月日历开始.
+        //startCalendar.add(Calendar.MONTH, -1);
+        //设置可以选择的起止日期.
+        Calendar startCalendar = CalendarSelectView.getCalendar(2019, 3, 29);
         calendarSelect.setCalendarRange(startCalendar);
 
     }

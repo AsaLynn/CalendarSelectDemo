@@ -11,11 +11,36 @@
 [图片上传失败...(image-68421f-1558712065753)]
 #AS下载
 ```
-implementation 'com.zxn.calendar:calendar-select:1.0.0'
+implementation 'com.zxn.calendar:calendar-select:1.0.4'
 ```
 # 使用
 
 **示例**
+- 单选日历:
+xml布局:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<com.zxn.calendar.CalendarSelectView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/calendar_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    app:locate_position="today"
+    app:select_type="single"
+    app:weekend_color="@color/colorAccent" />
+```
+代码中初始化:
+```
+//Calendar startCalendar = Calendar.getInstance();
+//从本年上个月日历开始.
+//startCalendar.add(Calendar.MONTH, -1);
+//设置可以选择的起止日期.
+Calendar startCalendar = CalendarSelectView.getCalendar(2019, 3, 29);
+calendarSelect.setCalendarRange(startCalendar);
+```
+- 多选日历:
+布局
 ```
 <com.zxn.calendar.CalendarSelectView
     android:id="@+id/calendar_select"
@@ -28,7 +53,7 @@ implementation 'com.zxn.calendar:calendar-select:1.0.0'
     app:max_select_days="7"
     app:select_bg="@drawable/bg_sp_circle_c_fa753a_select"
     app:select_type="mult" />
-```
+```    
 select_type 属性有如下：
 * mult（选择时间段）
 * single （单选日期）
@@ -38,25 +63,40 @@ locate_position属性如下：
 * today（初始选中当天，如果当天不在范围之内，则选中最后一天）
 * end （初始选中最后一天）
 
-max_select_days属性:设置时间段的最大天数间隔.
+- max_select_days属性:设置时间段的最大天数间隔.
+- select_bg属性:设置选中日期的背景
+- interval_select_color属性:设置选中日期中间日期的背景颜色
+- weekend_color属性:设置周末日期的背景颜色
 
-获取选中的日期 以及区间段，`只需要给当前控件设置这个callback即可`
+代码初始化:
 ```
-scvCalendar.setConfirmCallback(new ConfirmSelectDateCallback() {
-    @Override
-    public void selectSingleDate(DayTimeEntity timeEntity) {
-        titleCommon.setTitleText(timeEntity.year + "年" + timeEntity.month);
-    }
+Calendar startCalendar = CalendarSelectView.getCalendar(2016, 6, 1);
 
-    @Override
-    public void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity) {
+Calendar endCalendar = Calendar.getInstance();
 
+DayTimeEntity startDayTime
+                = new DayTimeEntity(startCalendar.get(Calendar.YEAR),
+                startCalendar.get(Calendar.MONTH),
+                0,
+                0,
+                0);
+
+DayTimeEntity endDayTime
+                = new DayTimeEntity(endCalendar.get(Calendar.YEAR),
+                endCalendar.get(Calendar.MONTH),
+                endCalendar.get(Calendar.DAY_OF_MONTH),//endCalendar.get(Calendar.DAY_OF_MONTH),
+                0,
+                0);
+calendarSelect.setCalendarRange(startCalendar, endCalendar, startDayTime, endDayTime);
+calendarSelect.setMultSelectedErrorCallback(new CalendarSelectView.MultSelectedErrorCallback() {
+    @Override
+    public void onMultSelectedError(int days, int maxDays) {
+        Toast.makeText(MultCalendarAcitivity.this, "最多查询跨度" + (maxDays + 1) + "天内的交易", Toast.LENGTH_SHORT).show();
     }
 });
 ```
-
-该控件默认的时间区间是：
-向前一年，向后三个月，
+该控件默认的时间区间是： 
+向前一年，向后三个月， 
 如果需要更改控件的时间区间，请调用如下方法：
 ```
 /**
@@ -80,5 +120,5 @@ public void setCalendarRange(Calendar startCalendar, Calendar endCalendar, DayTi
         if (outAdapter != null)
             outAdapter.setData(Util.getTotalCount(startCalendar, endCalendar));
     }
-}
+} 
 ```
