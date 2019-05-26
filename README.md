@@ -95,6 +95,14 @@ calendarSelect.setMultSelectedErrorCallback(new CalendarSelectView.MultSelectedE
     }
 });
 ```
+获取选择后的日期结果:
+```
+DayTimeEntity startDayTime = calendarSelect.getStartDayTime();
+DayTimeEntity endDayTime = calendarSelect.getEndDayTime();
+tvSelectStart.setText(startDayTime.year + "-" + (startDayTime.month + 1) + "-" + startDayTime.day);
+tvSelectEnd.setText(endDayTime.year + "-" + (endDayTime.month + 1) + "-" + endDayTime.day);
+```
+
 该控件默认的时间区间是： 
 向前一年，向后三个月， 
 如果需要更改控件的时间区间，请调用如下方法：
