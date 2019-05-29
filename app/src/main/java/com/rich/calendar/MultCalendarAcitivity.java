@@ -58,7 +58,7 @@ public class MultCalendarAcitivity extends AppCompatActivity {
         DayTimeEntity endDayTime
                 = new DayTimeEntity(endCalendar.get(Calendar.YEAR),
                 endCalendar.get(Calendar.MONTH),
-                endCalendar.get(Calendar.DAY_OF_MONTH),//endCalendar.get(Calendar.DAY_OF_MONTH),
+                0,//endCalendar.get(Calendar.DAY_OF_MONTH),
                 0,
                 0);
         calendarSelect.setCalendarRange(startCalendar, endCalendar, startDayTime, endDayTime);

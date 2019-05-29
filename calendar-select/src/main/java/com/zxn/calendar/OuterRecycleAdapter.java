@@ -90,10 +90,16 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void scrollToPosition() {
         if (multCallback != null) {
-            if (startDayTime.day != 0)
+            /*if (startDayTime.day != 0)
                 multCallback.refreshLocate(startDayTime.monthPosition);
             else if (endDayTime.day != 0)
+                multCallback.refreshLocate(endDayTime.monthPosition);*/
+            //totalCount
+            if (endDayTime.day != 0){
                 multCallback.refreshLocate(endDayTime.monthPosition);
+            }else {
+                multCallback.refreshLocate(getItemCount() - 1);
+            }
         }
     }
 
