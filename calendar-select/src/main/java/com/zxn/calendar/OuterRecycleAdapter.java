@@ -24,7 +24,14 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Calendar endCalendarDate;
     DayTimeEntity startDayTime;
     DayTimeEntity endDayTime;
-    int selectType;
+    private int selectType;
+
+    public void setSelectType(int selectType) {
+        this.selectType = selectType;
+        // TODO: 2020/8/11
+
+    }
+
     public CalendarSelectUpdateCallback multCallback;
     private int mMaxSelectDays;
     private int mWeekendColor;

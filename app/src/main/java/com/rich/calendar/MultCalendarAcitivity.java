@@ -78,10 +78,11 @@ public class MultCalendarAcitivity extends AppCompatActivity {
             case R.id.tv_select_end:
                 break;
             case R.id.tv_select_result:
-                DayTimeEntity startDayTime = calendarSelect.getStartDayTime();
+                /*DayTimeEntity startDayTime = calendarSelect.getStartDayTime();
                 DayTimeEntity endDayTime = calendarSelect.getEndDayTime();
                 tvSelectStart.setText(startDayTime.year + "-" + (startDayTime.month + 1) + "-" + startDayTime.day);
-                tvSelectEnd.setText(endDayTime.year + "-" + (endDayTime.month + 1) + "-" + endDayTime.day);
+                tvSelectEnd.setText(endDayTime.year + "-" + (endDayTime.month + 1) + "-" + endDayTime.day);*/
+                calendarSelect.setSelectType(CalendarSelectView.SINGLE);
                 break;
         }
     }

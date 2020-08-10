@@ -14,8 +14,8 @@ public interface CalendarSelectUpdateCallback {
 
     /**
      * 勾选多天时候的错误回调.
-     *
      * @param days 开始日期结束日期相差的天数.
+     * @param maxDays 11
      */
     void onMultSelectedError(int days, int maxDays);
 }

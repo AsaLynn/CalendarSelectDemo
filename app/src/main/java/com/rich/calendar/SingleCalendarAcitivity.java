@@ -1,11 +1,15 @@
 package com.rich.calendar;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.TextUtils;
 
 import com.zxn.calendar.CalendarSelectView;
+import com.zxn.calendar.ConfirmSelectDateCallback;
+import com.zxn.calendar.DayTimeEntity;
 
 import java.util.Calendar;
 
@@ -48,6 +52,17 @@ public class SingleCalendarAcitivity extends AppCompatActivity {
         //设置可以选择的起止日期.
         Calendar startCalendar = CalendarSelectView.getCalendar(2019, 3, 29);
         calendarSelect.setCalendarRange(startCalendar);
+        calendarSelect.setConfirmCallback(new ConfirmSelectDateCallback() {
+            @Override
+            public void selectSingleDate(DayTimeEntity timeEntity) {
+                Toast.makeText(SingleCalendarAcitivity.this, "timeEntity" + timeEntity.day, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity) {
+
+            }
+        });
 
     }
 }

@@ -4,15 +4,19 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -58,7 +62,7 @@ public class CalendarSelectView extends LinearLayout {
     private CalendarSelectUpdateCallback multCallback = new CalendarSelectUpdateCallback() {
         @Override
         public void updateMultView() {
-            CalendarSelectView.this.updateMultView();
+            //CalendarSelectView.this.updateMultView();
         }
 
         @Override
@@ -117,7 +121,7 @@ public class CalendarSelectView extends LinearLayout {
         initView(context);
         initAttrs(attrs);
         initAdapter();
-        addListener();
+        //addListener();
     }
 
     private void initCalendar() {
@@ -252,7 +256,7 @@ public class CalendarSelectView extends LinearLayout {
             startDayTime.month = endDayTime.month;
             startDayTime.day = endDayTime.day;
         }
-        updateMultView();
+        //updateMultView();
     }
 
     /**
@@ -261,7 +265,6 @@ public class CalendarSelectView extends LinearLayout {
     @Deprecated
     private void updateMultView() {
         if (selectType == MULT) {
-
 
             /*if (startDayTime.day != 0) {
                 leftTime.setText(startDayTime.year + "-" + Util.fillZero(startDayTime.month + 1) + "-" + Util.fillZero(startDayTime.day));
@@ -351,7 +354,7 @@ public class CalendarSelectView extends LinearLayout {
             }
         }
 
-        updateMultView();
+        //updateMultView();
         if (outAdapter != null) {
             outAdapter.notifyDataSetChanged();
             outAdapter.scrollToLocation();
@@ -458,5 +461,18 @@ public class CalendarSelectView extends LinearLayout {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, date);
         return calendar;
+    }
+
+    public void setSelectType(@SelectType int selectType) {
+        this.selectType = selectType;
+        outAdapter.setSelectType(selectType);
+        outAdapter.notifyDataSetChanged();
+        //invalidate();
+    }
+
+
+    @IntDef({SINGLE, MULT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SelectType {
     }
 }

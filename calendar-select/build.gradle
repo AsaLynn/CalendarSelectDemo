@@ -3,14 +3,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 29
 
-
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 29
-        versionCode 8
-        versionName "1.0.7"
-
-
+        versionCode 9
+        versionName "1.0.9"
     }
 
     buildTypes {
@@ -23,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 }
@@ -34,7 +31,7 @@ def siteUrl = 'https://github.com/zhang721688/CalendarSelectDemo'
 def gitUrl = 'https://github.com/zhang721688/CalendarSelectDemo.git'
 def libName = "calendar-select"
 group = "com.zxn.calendar"
-version = "1.0.7"
+version = "1.0.9"
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
