@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 7
-        versionName "1.0.6"
+        targetSdkVersion 29
+        versionCode 8
+        versionName "1.0.7"
 
 
     }
@@ -24,8 +24,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:recyclerview-v7:28.0.0"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }
 
 apply plugin: 'com.github.dcendents.android-maven'
@@ -34,7 +34,7 @@ def siteUrl = 'https://github.com/zhang721688/CalendarSelectDemo'
 def gitUrl = 'https://github.com/zhang721688/CalendarSelectDemo.git'
 def libName = "calendar-select"
 group = "com.zxn.calendar"
-version = "1.0.6"
+version = "1.0.7"
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
