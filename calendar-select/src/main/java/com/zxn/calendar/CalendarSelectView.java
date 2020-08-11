@@ -37,6 +37,7 @@ public class CalendarSelectView extends LinearLayout {
     public static final int MULT = 2;
     public static String START_TIME_KEY = "startTime";
     public static String END_TIME_KEY = "endTime";
+    private final int NONE = -1;//不选中
     private final int START = 0;
     private final int TODAY = 1;
     private final int END = 2;

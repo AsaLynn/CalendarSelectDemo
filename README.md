@@ -6,11 +6,9 @@
 
 # 效果图
 
-[图片上传失败...(image-3e98db-1558712065753)]
-
-[图片上传失败...(image-68421f-1558712065753)]
 #AS下载
 ```
+implementation 'com.zxn.calendar:calendar-select:1.1.0'
 implementation 'com.zxn.calendar:calendar-select:1.0.4'
 ```
 # 使用
@@ -31,6 +29,7 @@ xml布局:
     app:weekend_color="@color/colorAccent" />
 ```
 代码中初始化:
+方式1
 ```
 //Calendar startCalendar = Calendar.getInstance();
 //从本年上个月日历开始.
@@ -38,6 +37,40 @@ xml布局:
 //设置可以选择的起止日期.
 Calendar startCalendar = CalendarSelectView.getCalendar(2019, 3, 29);
 calendarSelect.setCalendarRange(startCalendar);
+```
+方式2(推荐)
+```
+Calendar startCalendar = CalendarSelectView.getCalendar(2016, 6, 1);
+//设置可选日期的截止日期
+Calendar endCalendar = Calendar.getInstance();
+//可选日期设置为昨日.
+endCalendar.set(Calendar.DATE, endCalendar.get(Calendar.DATE) - 1);
+DayTimeEntity startDayTime
+        = new DayTimeEntity(startCalendar.get(Calendar.YEAR),
+        startCalendar.get(Calendar.MONTH),
+        -1,
+        0,
+        0);
+DayTimeEntity endDayTime
+        = new DayTimeEntity(endCalendar.get(Calendar.YEAR),
+        endCalendar.get(Calendar.MONTH),
+        0,
+        0,
+        0);
+calendarSelect.setSelectType(CalendarSelectView.SINGLE);
+calendarSelect.setCalendarRange(startCalendar, endCalendar, startDayTime, endDayTime);
+calendarSelect.selectDateCallback(new SelectDateCallback() {
+    @Override
+    public void selectSingleDate(DayTimeEntity timeEntity) {
+        //单选点击选择日期
+        Toast.makeText(SingleCalendarAcitivity.this, "timeEntity" + timeEntity.day, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity) {
+
+    }
+});
 ```
 - 多选日历:
 布局
@@ -62,6 +95,7 @@ locate_position属性如下：
 * start (初始选中开始)
 * today（初始选中当天，如果当天不在范围之内，则选中最后一天）
 * end （初始选中最后一天）
+* none （不进行选中,开发中）
 
 - max_select_days属性:设置时间段的最大天数间隔.
 - select_bg属性:设置选中日期的背景
@@ -71,16 +105,13 @@ locate_position属性如下：
 代码初始化:
 ```
 Calendar startCalendar = CalendarSelectView.getCalendar(2016, 6, 1);
-
 Calendar endCalendar = Calendar.getInstance();
-
 DayTimeEntity startDayTime
                 = new DayTimeEntity(startCalendar.get(Calendar.YEAR),
                 startCalendar.get(Calendar.MONTH),
                 0,
                 0,
                 0);
-
 DayTimeEntity endDayTime
                 = new DayTimeEntity(endCalendar.get(Calendar.YEAR),
                 endCalendar.get(Calendar.MONTH),
@@ -129,4 +160,11 @@ public void setCalendarRange(Calendar startCalendar, Calendar endCalendar, DayTi
             outAdapter.setData(Util.getTotalCount(startCalendar, endCalendar));
     }
 } 
+```
+- 切换日历选择方式
+```
+//单选
+calendarSelect.setSelectType(CalendarSelectView.SINGLE);
+//多选
+calendarSelect.setSelectType(CalendarSelectView.MULT);
 ```

@@ -5,6 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    app:locate_position="today"
+    app:locate_position="none"
     app:select_type="mult"
     app:weekend_color="@color/colorAccent" />

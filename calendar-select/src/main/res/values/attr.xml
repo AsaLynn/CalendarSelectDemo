@@ -6,6 +6,7 @@
             <enum name="mult" value="2" />
         </attr>
         <attr name="locate_position">
+            <enum name="none" value="-1" />
             <enum name="start" value="0" />
             <enum name="today" value="1" />
             <enum name="end" value="2" />

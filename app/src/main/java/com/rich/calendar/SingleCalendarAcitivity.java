@@ -56,6 +56,7 @@ public class SingleCalendarAcitivity extends AppCompatActivity {
 
         Calendar startCalendar = CalendarSelectView.getCalendar(2016, 6, 1);
         Calendar endCalendar = Calendar.getInstance();
+        endCalendar.set(Calendar.DATE, endCalendar.get(Calendar.DATE) - 1);
         DayTimeEntity startDayTime
                 = new DayTimeEntity(startCalendar.get(Calendar.YEAR),
                 startCalendar.get(Calendar.MONTH),

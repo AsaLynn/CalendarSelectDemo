@@ -2,8 +2,10 @@ package com.zxn.calendar;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,6 +28,10 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
     Calendar todayCalendar;
     DayTimeEntity startDayTime;
     DayTimeEntity endDayTime;
+    private Drawable mSelectBgDrawable;
+    private Drawable mIntervalSelectBgDrawable;
+    private int mIntervalSelectBgColor;
+    private int mWeekendColor;
 
     public InnerViewHolder(View itemView, Calendar startCalendarDate, Calendar endCalendarDate, DayTimeEntity startDayTime, DayTimeEntity endDayTime) {
         super(itemView);
@@ -44,8 +50,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
         this.endCalendarDate = endCalendarDate;
         this.startDayTime = startDayTime;
         this.endDayTime = endDayTime;
-
-
     }
 
     private void setCalendarZero(Calendar calendar) {
@@ -63,6 +67,7 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             responseDayIsZero(entity);
         } else if ((tempCalendar.getTimeInMillis() >= startCalendarDate.getTimeInMillis())
                 && (tempCalendar.getTimeInMillis() <= endCalendarDate.getTimeInMillis())) {
+            //框定可选时间的范围.
             responseInner(entity);
         } else {
             responseOuter(entity);
@@ -210,7 +215,7 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_text_color_1482f0);
             date.setTextColor(color);
             dot.setVisibility(View.VISIBLE);
-            if (null != mSelectBgDrawable){
+            if (null != mSelectBgDrawable) {
                 dot.setBackgroundDrawable(mSelectBgDrawable);
             }
             if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
@@ -230,9 +235,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private Drawable mSelectBgDrawable;
-    private Drawable mIntervalSelectBgDrawable;
-
     public void setSelectBgDrawable(Drawable drawable) {
         this.mSelectBgDrawable = drawable;
     }
@@ -241,13 +243,9 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
         this.mIntervalSelectBgDrawable = drawable;
     }
 
-    private int mIntervalSelectBgColor;
-
     public void setIntervalSelectBgColor(int color) {
         this.mIntervalSelectBgColor = color;
     }
-
-    private int mWeekendColor;
 
     public void setWeekendColor(int color) {
         mWeekendColor = color;
