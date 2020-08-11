@@ -26,30 +26,20 @@ import java.util.Map;
 
 public class CalendarSelectView extends LinearLayout {
 
-    private Context context;
+//    private TextView leftTime;
+//    private TextView rightTime;
+//    private TextView define;
+//    private LinearLayout timeParent;
+//    private TextView clear;
+//    private TextView confirm;
 
-    public static String START_TIME_KEY = "startTime";
-    public static String END_TIME_KEY = "endTime";
     public static final int SINGLE = 1;
     public static final int MULT = 2;
-
+    public static String START_TIME_KEY = "startTime";
+    public static String END_TIME_KEY = "endTime";
     private final int START = 0;
     private final int TODAY = 1;
     private final int END = 2;
-
-
-    //    private TextView leftTime;
-//    private TextView rightTime;
-    private RecyclerView recyclerView;
-    //    private TextView define;
-//    private LinearLayout timeParent;
-    //    private TextView clear;
-//    private TextView confirm;
-    private OuterRecycleAdapter outAdapter;
-
-    private int selectType;
-    private int locationType;
-
     Calendar startCalendar;
     Calendar endCalendar;
     Calendar startCalendarDate;
@@ -57,13 +47,18 @@ public class CalendarSelectView extends LinearLayout {
     DayTimeEntity startDayTime;
     DayTimeEntity endDayTime;
     GridLayoutManager layoutManager;
-
-    private ConfirmSelectDateCallback selectDateCallback;
+    private Context context;
+    private RecyclerView recyclerView;
+    private OuterRecycleAdapter outAdapter;
+    private int selectType;
+    private int locationType;
+    private SelectDateCallback mSelectDateCallback;
+    private MultSelectedErrorCallback mMultSelectedErrorCallback;
     private CalendarSelectUpdateCallback multCallback = new CalendarSelectUpdateCallback() {
-        @Override
+        /*@Override
         public void updateMultView() {
             //CalendarSelectView.this.updateMultView();
-        }
+        }*/
 
         @Override
         public void refreshLocate(int position) {
@@ -82,24 +77,12 @@ public class CalendarSelectView extends LinearLayout {
                 mMultSelectedErrorCallback.onMultSelectedError(days, maxDays);
             }
         }
+
+        @Override
+        public void onSingleDateSelected() {
+            mSelectDateCallback.selectSingleDate(startDayTime);
+        }
     };
-    private MultSelectedErrorCallback mMultSelectedErrorCallback;
-
-    public interface MultSelectedErrorCallback {
-
-        /**
-         * 选择天数间隔错误的回调.
-         *
-         * @param days    开始时间间隔和结束时间的实际天数间隔.
-         * @param maxDays 开始时间间隔和结束时间的最大天数间隔.
-         */
-        void onMultSelectedError(int days, int maxDays);
-    }
-
-    public void setMultSelectedErrorCallback(MultSelectedErrorCallback callback) {
-        this.mMultSelectedErrorCallback = callback;
-    }
-
     private Drawable mSelectBgDrawable;
     private Drawable mIntervalSelectBgDrawable;
     private int mIntervalSelectBgColor;
@@ -122,6 +105,24 @@ public class CalendarSelectView extends LinearLayout {
         initAttrs(attrs);
         initAdapter();
         //addListener();
+    }
+
+    /**
+     * 获取Calendar
+     *
+     * @param year  年份
+     * @param month 月份,比实际月份小1
+     * @param date  日期
+     * @return 指定年月日的Calendar
+     */
+    public static Calendar getCalendar(int year, int month, int date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date);
+        return calendar;
+    }
+
+    public void setMultSelectedErrorCallback(MultSelectedErrorCallback callback) {
+        this.mMultSelectedErrorCallback = callback;
     }
 
     private void initCalendar() {
@@ -407,8 +408,46 @@ public class CalendarSelectView extends LinearLayout {
 //        });
     }
 
-    public void setConfirmCallback(ConfirmSelectDateCallback selectDateCallback) {
-        this.selectDateCallback = selectDateCallback;
+    public void selectDateCallback(SelectDateCallback callback) {
+        this.mSelectDateCallback = callback;
+    }
+
+    /**
+     * 获取当前年份和月份,日期.
+     *
+     * @return 年份和月份, 日期.
+     */
+    public DayTimeEntity getTodyDayTime() {
+        return new DayTimeEntity(mTodaycalendar.get(Calendar.YEAR), mTodaycalendar.get(Calendar.MONTH), mTodaycalendar.get(Calendar.DAY_OF_MONTH), 0, 0);
+    }
+
+    public DayTimeEntity getStartDayTime() {
+        return startDayTime;
+    }
+
+    public DayTimeEntity getEndDayTime() {
+        return endDayTime;
+    }
+
+    public void setSelectType(@SelectType int selectType) {
+        this.selectType = selectType;
+        outAdapter.setSelectType(selectType);
+    }
+
+    public interface MultSelectedErrorCallback {
+
+        /**
+         * 选择天数间隔错误的回调.
+         *
+         * @param days    开始时间间隔和结束时间的实际天数间隔.
+         * @param maxDays 开始时间间隔和结束时间的最大天数间隔.
+         */
+        void onMultSelectedError(int days, int maxDays);
+    }
+
+    @IntDef({SINGLE, MULT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SelectType {
     }
 
     class SpaceItemDecoration extends RecyclerView.ItemDecoration {
@@ -430,49 +469,5 @@ public class CalendarSelectView extends LinearLayout {
                 outRect.top = 0;
             }
         }
-    }
-
-    /**
-     * 获取当前年份和月份,日期.
-     *
-     * @return 年份和月份, 日期.
-     */
-    public DayTimeEntity getTodyDayTime() {
-        return new DayTimeEntity(mTodaycalendar.get(Calendar.YEAR), mTodaycalendar.get(Calendar.MONTH), mTodaycalendar.get(Calendar.DAY_OF_MONTH), 0, 0);
-    }
-
-    public DayTimeEntity getStartDayTime() {
-        return startDayTime;
-    }
-
-    public DayTimeEntity getEndDayTime() {
-        return endDayTime;
-    }
-
-    /**
-     * 获取Calendar
-     *
-     * @param year  年份
-     * @param month 月份,比实际月份小1
-     * @param date  日期
-     * @return 指定年月日的Calendar
-     */
-    public static Calendar getCalendar(int year, int month, int date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, date);
-        return calendar;
-    }
-
-    public void setSelectType(@SelectType int selectType) {
-        this.selectType = selectType;
-        outAdapter.setSelectType(selectType);
-        outAdapter.notifyDataSetChanged();
-        //invalidate();
-    }
-
-
-    @IntDef({SINGLE, MULT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface SelectType {
     }
 }

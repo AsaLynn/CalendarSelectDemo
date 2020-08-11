@@ -1,10 +1,11 @@
 package com.zxn.calendar;
 
-/**
- * Created by richzjc on 18/3/14.
- */
-
-public interface ConfirmSelectDateCallback {
+public interface SelectDateCallback {
+    /**
+     * 单选日期回调.
+     *
+     * @param timeEntity
+     */
     void selectSingleDate(DayTimeEntity timeEntity);
 
     void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity);

@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Updated by zxn on 2020/8/11.
  * Created by richzjc on 18/3/13.
  */
-
 public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     int totalCount;
@@ -25,11 +25,13 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     DayTimeEntity startDayTime;
     DayTimeEntity endDayTime;
     private int selectType;
+    private Drawable mSelectBgDrawable;
+    private Drawable mIntervalSelectBgDrawable;
+    private int mIntervalSelectBgColor;
 
     public void setSelectType(int selectType) {
         this.selectType = selectType;
-        // TODO: 2020/8/11
-
+        notifyDataSetChanged();
     }
 
     public CalendarSelectUpdateCallback multCallback;
@@ -124,7 +126,6 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.global_recycler_item_inner, parent, false);
             InnerViewHolder holder = new InnerViewHolder(view, startCalendarDate, endCalendarDate, startDayTime, endDayTime);
             DateOnclickListener listener = new DateOnclickListener(selectType, startDayTime, endDayTime, this);
-
             holder.itemView.setOnClickListener(listener);
             holder.itemView.setTag(listener);
             holder.setSelectBgDrawable(mSelectBgDrawable);
@@ -192,9 +193,6 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.multCallback = multCallback;
     }
 
-    private Drawable mSelectBgDrawable;
-    private Drawable mIntervalSelectBgDrawable;
-
     public void setSelectBgDrawable(Drawable drawable) {
         this.mSelectBgDrawable = drawable;
     }
@@ -203,7 +201,6 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mIntervalSelectBgDrawable = drawable;
     }
 
-    private int mIntervalSelectBgColor;
 
     public void setIntervalSelectBgColor(int color) {
         this.mIntervalSelectBgColor = color;

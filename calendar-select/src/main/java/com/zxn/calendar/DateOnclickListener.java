@@ -30,20 +30,26 @@ public class DateOnclickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (timeEntity == null)
+        if (timeEntity == null) {
             throw new IllegalStateException("数据源是不能为空的");
-        else {
+        } else {
             if (selectType == CalendarSelectView.SINGLE) {
                 responseSingle(timeEntity);
+                if (outAdapter != null) {
+                    outAdapter.notifyDataSetChanged();
+                    if (null != outAdapter.multCallback) {
+                        outAdapter.multCallback.onSingleDateSelected();
+                    }
+                }
             } else if (selectType == CalendarSelectView.MULT) {
                 responseMult(timeEntity);
+                if (outAdapter != null) {
+                    outAdapter.notifyDataSetChanged();
+                }
             }
-            if (outAdapter != null)
-                outAdapter.notifyDataSetChanged();
-
-            if (outAdapter.multCallback != null)
+            /*if (outAdapter.multCallback != null) {
                 outAdapter.multCallback.updateMultView();
-
+            }*/
         }
     }
 

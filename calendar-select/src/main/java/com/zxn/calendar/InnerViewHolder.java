@@ -10,16 +10,9 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-//import butterknife.BindView;
-//import butterknife.ButterKnife;
-
-//com.zxn.calendar.CalendarSelectUpdateCallback
-//import com.zxn.calendar.R;
-
 /**
- * Created by richzjc on 18/3/13.
+ * Updated by zxn on 2020/8/11.
  */
-
 public class InnerViewHolder extends RecyclerView.ViewHolder {
 
     View dot;
@@ -93,7 +86,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
                 || (startDayTime.day != endDayTime.day);
         boolean temp = (dayTimeEntity.listPosition > startDayTime.listPosition) && (dayTimeEntity.listPosition < endDayTime.listPosition);
         if (flag && value && temp) {
-            //int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
             rightView.setBackgroundColor(mIntervalSelectBgColor);
             leftView.setBackgroundColor(mIntervalSelectBgColor);
 
@@ -101,7 +93,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
             rightView.setBackgroundColor(color);
             leftView.setBackgroundColor(color);
-
         }
     }
 
@@ -155,7 +146,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
     private void responseToRange(DayTimeEntity entity, boolean isToday) {
         if ((startDayTime.listPosition >= 0) && (startDayTime.listPosition == entity.listPosition)) {
             updateDateBg(entity, startDayTime, isToday);
-            //int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
             rightView.setBackgroundColor(mIntervalSelectBgColor);
             int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
             leftView.setBackgroundColor(color);
@@ -164,13 +154,11 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
                 && (entity.listPosition > startDayTime.listPosition)
                 && (entity.listPosition < endDayTime.listPosition)) {
             updateDateBg(entity, startDayTime, isToday);
-//            int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
             rightView.setBackgroundColor(mIntervalSelectBgColor);
             leftView.setBackgroundColor(mIntervalSelectBgColor);
             date.setBackgroundColor(Color.TRANSPARENT);
         } else if ((endDayTime.listPosition >= 0) && (endDayTime.listPosition == entity.listPosition)) {
             updateDateBg(entity, endDayTime, isToday);
-            //int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_backround_1a1482f0);
             leftView.setBackgroundColor(mIntervalSelectBgColor);
             int color = ContextCompat.getColor(itemView.getContext(), R.color.day_mode_background_color);
             rightView.setBackgroundColor(color);
@@ -188,7 +176,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
                 dot.setBackgroundResource(R.drawable.global_drawable_circle_select);
             } else {
                 dot.setBackgroundDrawable(mSelectBgDrawable);
-//                dot.setBackgroundDrawable(mSelectBgDrawable);
             }
         } else {
             dot.setVisibility(View.GONE);
@@ -228,8 +215,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
             }
             if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
                     || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-//                int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
-//                date.setTextColor(textColor);
                 date.setTextColor(mWeekendColor);
             }
         } else {
@@ -240,8 +225,6 @@ public class InnerViewHolder extends RecyclerView.ViewHolder {
 
             if (tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY
                     || tempCalendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-//                int textColor = ContextCompat.getColor(itemView.getContext(), R.color.c_fa753a);
-//                date.setTextColor(textColor);
                 date.setTextColor(mWeekendColor);
             }
         }
