@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_100">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="第一周"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_day_start_stop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="center"
+            android:text="08.07-08.31"
+            android:textColor="@color/c_bdbdbd"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+

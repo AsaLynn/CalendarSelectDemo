@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_60"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/c_f4f4f4" />
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_50"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:text="2020年08月"
+            android:textColor="@color/c_000000"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/c_f4f4f4" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

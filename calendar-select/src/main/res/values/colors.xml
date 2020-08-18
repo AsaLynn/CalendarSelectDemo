@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="day_mode_text_color_b3b3b3">#B3B3B3</color>
+    <color name="c_000000">#000000</color>
+    <color name="c_bdbdbd">#bdbdbd</color>
+    <color name="c_f4f4f4">#f4f4f4</color>
 </resources>

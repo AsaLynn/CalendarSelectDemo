@@ -50,4 +50,19 @@
         android:text="tv_mult_calendar"
         android:textColor="#ffffff"
         android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_week_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:background="#000000"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="周选择日历"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 </LinearLayout>

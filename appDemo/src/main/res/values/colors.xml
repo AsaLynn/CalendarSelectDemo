@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="c_ff9800">#ff9800</color>
     <color name="c_66ff9800">#66FF9800</color>
+    <color name="c_f4f4f4">#f4f4f4</color>
+    <color name="c_e5e5e5">#e5e5e5</color>
+    <color name="c_bdbdbd">#bdbdbd</color>
 </resources>

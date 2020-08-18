@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("flag", "mult1");
                         startActivity(intent);
                     }
+                });
+        findViewById(R.id.tv_week_select)
+                .setOnClickListener(v -> {
+                    WeekSelectDemoActivity.jumpTo(this);
                 });
     }
 }
