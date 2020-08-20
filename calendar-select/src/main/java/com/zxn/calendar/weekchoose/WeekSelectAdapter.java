@@ -2,6 +2,7 @@ package com.zxn.calendar.weekchoose;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
+import com.zxn.calendar.MonthTimeEntity;
 import com.zxn.calendar.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,14 +31,19 @@ public class WeekSelectAdapter extends BaseSectionQuickAdapter<TimeSectionEntity
 
     @Override
     protected void convertHeader(@NotNull BaseViewHolder helper, @NotNull TimeSectionEntity item) {
-        if (item.getObject() instanceof String) {
-            helper.setText(R.id.tv_header, (String) item.getObject());
+        if (item.getObject() instanceof MonthTimeEntity) {
+            MonthTimeEntity entity = (MonthTimeEntity) item.getObject();
+            String value = entity.year + "年" + entity.month + "月";
+            helper.setText(R.id.tv_header, value);
         }
+        /*if (item.isHeader()) {
+
+        }*/
     }
 
     @Override
     protected void convert(@NotNull BaseViewHolder helper, @NotNull TimeSectionEntity item) {
-        Video video = (Video) item.getObject();
-        helper.setText(R.id.tv, video.getName());
+        TimeEntity timeEntity = (TimeEntity) item.getObject();
+        //helper.setText(R.id.tv, timeEntity.getName());
     }
 }

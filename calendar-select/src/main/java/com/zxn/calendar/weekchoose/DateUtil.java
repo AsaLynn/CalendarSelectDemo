@@ -246,11 +246,11 @@ public class DateUtil {
     }
 
     /**
-     * 通过年份和月份 得到当月的yigong日子
+     * 通过年份和月份 得到当月的一共的日子
      *
-     * @param year
-     * @param month
-     * @return
+     * @param year 年份
+     * @param month 月份
+     * @return  该月总共的日子.
      */
     public static int getMonthDays(int year, int month) {
         month++;

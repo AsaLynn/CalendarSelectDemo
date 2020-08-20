@@ -18,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.zxn.calendar.MonthTimeEntity;
 import com.zxn.calendar.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -180,12 +182,12 @@ public class WeekSelectView extends LinearLayout {
 
         onInitView();
 
-        this.year = DateUtil.getYear();
+        /*this.year = DateUtil.getYear();
         this.month = DateUtil.getMonth();
         this.day = DateUtil.getDay();
         this.yearData = year;
         this.monthData = month;
-        this.dayData = day;
+        this.dayData = day;*/
 
         onInitWeekSectionList();
 
@@ -195,11 +197,106 @@ public class WeekSelectView extends LinearLayout {
      * 周日历仅保留最近一年(12月)的周数据.
      */
     private void onInitWeekSectionList() {
-        for (int i = 0; i < months; i++) {
-            mWeekSelectList.add(new TimeSectionEntity(true, "Section " + i));
-            //mWeekSelectList.add(new WeekSection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
+        mWeekSelectList.clear();
+        for (int i = months; i >= 0; i--) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - i);
+            int tYear = calendar.get(Calendar.YEAR);
+            int tMonth = calendar.get(Calendar.MONTH) + 1;
+            mWeekSelectList.add(new TimeSectionEntity(true, new MonthTimeEntity(tYear, tMonth)));
+
+            //计算该月拥有的星期数.
+            getWeekList(tYear,tMonth);
+
+            //init();
         }
         mWeekSelectAdapter.setNewInstance(mWeekSelectList);
+    }
+
+    private void getWeekList(int year,int month) {
+
+        int days = DateUtil.getMonthDays(year, month - 1);
+        int firstDay = DateUtil.getFirstDayWeek17(year, month - 1);
+        daysLiang = days;
+        daysLiang--;
+
+        list.clear();
+
+        int[] is1 = new int[7];
+        for (int i = 0; i < (8 - firstDay); i++) {
+            is1[firstDay - 1 + i] = days - daysLiang;
+            daysLiang--;
+            if (day == is1[firstDay - 1 + i]) {
+                selectPosition = 0;
+            }
+        }
+        list.add(is1);
+        int[] is2 = new int[7];
+        for (int i = 0; i < 7; i++) {
+            is2[i] = days - daysLiang;
+            daysLiang--;
+            if (day == is2[i]) {
+                selectPosition = 1;
+            }
+        }
+        list.add(is2);
+
+        int[] is3 = new int[7];
+        for (int i = 0; i < 7; i++) {
+            is3[i] = days - daysLiang;
+            daysLiang--;
+            if (day == is3[i]) {
+                selectPosition = 2;
+            }
+        }
+        list.add(is3);
+
+        int[] is4 = new int[7];
+        for (int i = 0; i < 7; i++) {
+            is4[i] = days - daysLiang;
+            daysLiang--;
+            if (day == is4[i]) {
+                selectPosition = 3;
+            }
+            if (daysLiang < 0) {
+                list.add(is4);
+                return;
+            }
+
+        }
+        list.add(is4);
+
+
+        int[] is5 = new int[7];
+        for (int i = 0; i < 7; i++) {
+            is5[i] = days - daysLiang;
+            daysLiang--;
+            if (day == is5[i]) {
+                selectPosition = 4;
+            }
+            if (daysLiang < 0) {
+                list.add(is5);
+                return;
+            }
+        }
+
+        list.add(is5);
+        if (daysLiang < 0)
+            return;
+
+        int[] is6 = new int[7];
+        for (int i = 0; i < 7; i++) {
+            is6[i] = days - daysLiang;
+            daysLiang--;
+            if (day == is6[i]) {
+                selectPosition = 5;
+            }
+            if (daysLiang < 0) {
+                list.add(is6);
+                return;
+            }
+        }
+        list.add(is6);
     }
 
     private void onInitView() {
@@ -395,18 +492,6 @@ public class WeekSelectView extends LinearLayout {
         hasHead = false;
         hasFoot = false;
         title.setText(month + "月");
-
-
-        /*for (int i = 0; i < 8; i++) {
-            mWeekSelectList.add(new MySection(true, "Section " + i));
-            mWeekSelectList.add(new MySection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
-            mWeekSelectList.add(new MySection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
-            mWeekSelectList.add(new MySection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
-            mWeekSelectList.add(new MySection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
-            mWeekSelectList.add(new MySection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
-            mWeekSelectList.add(new MySection(false, new Video("HTTPS_AVATARS1_GITHUBUSERCONTENT_COM_LINK", "CYM_CHAD")));
-        }
-        mWeekSelectAdapter.setNewInstance(mWeekSelectList);*/
     }
 
 
