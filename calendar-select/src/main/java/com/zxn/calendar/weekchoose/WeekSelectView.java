@@ -166,7 +166,7 @@ public class WeekSelectView extends LinearLayout {
     /**
      * 要展示的指定月的数量.
      */
-    private int months = 12;
+    private int months = 0;//12
 
 
     public WeekSelectView(Context context) {
@@ -220,7 +220,7 @@ public class WeekSelectView extends LinearLayout {
         daysLiang = days;
         daysLiang--;
 
-        list.clear();
+        //list.clear();
 
         int[] is1 = new int[7];
         for (int i = 0; i < (8 - firstDay); i++) {
@@ -230,7 +230,12 @@ public class WeekSelectView extends LinearLayout {
                 selectPosition = 0;
             }
         }
-        list.add(is1);
+        //list.add(is1);
+        TimeEntity entity1 = new TimeEntity(year, month);
+        entity1.dayArray = is1;
+        entity1.order = 1;
+        mWeekSelectList.add(new TimeSectionEntity(false, entity1));
+
         int[] is2 = new int[7];
         for (int i = 0; i < 7; i++) {
             is2[i] = days - daysLiang;
@@ -239,7 +244,10 @@ public class WeekSelectView extends LinearLayout {
                 selectPosition = 1;
             }
         }
-        list.add(is2);
+        //list.add(is2);
+        TimeEntity entity2 = new TimeEntity(year, month);
+        entity2.dayArray = is2;
+        mWeekSelectList.add(new TimeSectionEntity(false, entity2));
 
         int[] is3 = new int[7];
         for (int i = 0; i < 7; i++) {
@@ -249,7 +257,10 @@ public class WeekSelectView extends LinearLayout {
                 selectPosition = 2;
             }
         }
-        list.add(is3);
+        //list.add(is3);
+        TimeEntity entity3 = new TimeEntity(year, month);
+        entity3.dayArray = is3;
+        mWeekSelectList.add(new TimeSectionEntity(false, entity3));
 
         int[] is4 = new int[7];
         for (int i = 0; i < 7; i++) {
@@ -264,8 +275,10 @@ public class WeekSelectView extends LinearLayout {
             }
 
         }
-        list.add(is4);
-
+        //list.add(is4);
+        TimeEntity entity4 = new TimeEntity(year, month);
+        entity3.dayArray = is4;
+        mWeekSelectList.add(new TimeSectionEntity(false, entity4));
 
         int[] is5 = new int[7];
         for (int i = 0; i < 7; i++) {
@@ -280,7 +293,10 @@ public class WeekSelectView extends LinearLayout {
             }
         }
 
-        list.add(is5);
+        //list.add(is5);
+        TimeEntity entity5 = new TimeEntity(year, month);
+        entity3.dayArray = is5;
+        mWeekSelectList.add(new TimeSectionEntity(false, entity5));
         if (daysLiang < 0)
             return;
 
@@ -296,7 +312,10 @@ public class WeekSelectView extends LinearLayout {
                 return;
             }
         }
-        list.add(is6);
+        //list.add(is6);
+        TimeEntity entity6 = new TimeEntity(year, month);
+        entity3.dayArray = is6;
+        mWeekSelectList.add(new TimeSectionEntity(false, entity6));
     }
 
     private void onInitView() {

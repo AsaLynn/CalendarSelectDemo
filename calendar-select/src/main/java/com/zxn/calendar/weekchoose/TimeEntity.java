@@ -24,6 +24,8 @@ public class TimeEntity {
      */
     public String saturdayDate;
 
+    public int[] dayArray;
+
 
     /**
      * 周的次序编号
