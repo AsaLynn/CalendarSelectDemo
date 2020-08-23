@@ -24,7 +24,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
-    implementation 'com.zxn.time:time-utils:1.5.4'
+    implementation 'com.zxn.time:time-utils:1.5.7'
     //api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 }
 
