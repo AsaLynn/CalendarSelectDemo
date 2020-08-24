@@ -8,8 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zxn.calendar.CalendarSelectView;
-import com.zxn.calendar.SelectDateCallback;
-import com.zxn.calendar.DayTimeEntity;
+import com.zxn.calendar.entity.DayTimeEntity;
 
 import java.util.Calendar;
 
@@ -71,16 +70,6 @@ public class SingleCalendarAcitivity extends AppCompatActivity {
                 0);
         calendarSelect.setSelectType(CalendarSelectView.SINGLE);
         calendarSelect.setCalendarRange(startCalendar, endCalendar, startDayTime, endDayTime);
-        calendarSelect.selectDateCallback(new SelectDateCallback() {
-            @Override
-            public void selectSingleDate(DayTimeEntity timeEntity) {
-                Toast.makeText(SingleCalendarAcitivity.this, "timeEntity" + timeEntity.day, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void selectMultDate(DayTimeEntity startTimeEntity, DayTimeEntity endTimeEntity) {
-
-            }
-        });
+        calendarSelect.selectDateCallback(timeEntity -> Toast.makeText(SingleCalendarAcitivity.this, "timeEntity" + timeEntity.day, Toast.LENGTH_SHORT).show());
     }
 }

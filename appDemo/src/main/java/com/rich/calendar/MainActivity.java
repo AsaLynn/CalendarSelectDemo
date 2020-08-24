@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 });
         findViewById(R.id.tv_week_select)
                 .setOnClickListener(v -> {
-                    WeekSelectDemoActivity.jumpTo(this);
+                    //WeekSelectDemoActivity.jumpTo(this);
+                    WeekSelectActivity.jumpTo(this);
                 });
     }
 }

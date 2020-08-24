@@ -1,15 +1,19 @@
-package com.zxn.calendar;
+package com.zxn.calendar.adapter;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import com.zxn.calendar.CalendarSelectView;
+import com.zxn.calendar.adapter.OuterRecycleAdapter;
+import com.zxn.calendar.entity.DayTimeEntity;
+import com.zxn.calendar.utils.Util;
 
 import java.util.Calendar;
 
 /**
+ * Updated by zxn on 2020/8/24.
  * Created by richzjc on 18/3/14.
  */
-
 public class DateOnclickListener implements View.OnClickListener {
 
     private static final String TAG = "DateOnclickListener";
@@ -47,9 +51,6 @@ public class DateOnclickListener implements View.OnClickListener {
                     outAdapter.notifyDataSetChanged();
                 }
             }
-            /*if (outAdapter.multCallback != null) {
-                outAdapter.multCallback.updateMultView();
-            }*/
         }
     }
 

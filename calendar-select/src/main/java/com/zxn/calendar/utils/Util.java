@@ -1,14 +1,9 @@
-package com.zxn.calendar;
-
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.widget.TextView;
+package com.zxn.calendar.utils;
 
 import androidx.annotation.NonNull;
+
+import com.zxn.calendar.entity.DayTimeEntity;
+import com.zxn.calendar.entity.HeadTimeEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,8 +63,8 @@ public class Util {
         return getSeparatedDays(new Date(oldStamp), new Date(newStamp));
     }
 
-    private static List<MonthTimeEntity> initMonthList(Calendar startCalendar, Calendar endCalendar) {
-        List<MonthTimeEntity> monthTimeEntities = new ArrayList<>();
+    private static List<HeadTimeEntity> initMonthList(Calendar startCalendar, Calendar endCalendar) {
+        List<HeadTimeEntity> monthTimeEntities = new ArrayList<>();
         monthTimeEntities.clear();
         if (endCalendar.getTimeInMillis() < startCalendar.getTimeInMillis())
             throw new IllegalStateException("结束时间不能早于开始时间");
@@ -80,14 +75,14 @@ public class Util {
             int endMonth = endCalendar.get(Calendar.MONTH);
 
             if (startYear == endYear && startMonth == endMonth) {
-                monthTimeEntities.add(new MonthTimeEntity(startYear, startMonth));
+                monthTimeEntities.add(new HeadTimeEntity(startYear, startMonth));
             } else {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(startCalendar.getTimeInMillis());
                 while (true) {
                     int tempYear = calendar.get(Calendar.YEAR);
                     int tempMonth = calendar.get(Calendar.MONTH);
-                    monthTimeEntities.add(new MonthTimeEntity(tempYear, tempMonth));
+                    monthTimeEntities.add(new HeadTimeEntity(tempYear, tempMonth));
                     if (tempYear == endYear && tempMonth == endMonth)
                         break;
                     else
@@ -98,7 +93,7 @@ public class Util {
         return monthTimeEntities;
     }
 
-    public static List<DayTimeEntity> getListByMonthTime(MonthTimeEntity monthTimeEntity, int monthPosition) {
+    public static List<DayTimeEntity> getListByMonthTime(HeadTimeEntity monthTimeEntity, int monthPosition) {
         List<DayTimeEntity> list = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, monthTimeEntity.year);
@@ -130,10 +125,10 @@ public class Util {
 
     public static List<Object> getTotalCount(Calendar startCalendar, Calendar endCalendar) {
         List<Object> list = new ArrayList<>(2);
-        Map<Integer, MonthTimeEntity> map = new LinkedHashMap<>();
+        Map<Integer, HeadTimeEntity> map = new LinkedHashMap<>();
         int totalCount = 0;
-        List<MonthTimeEntity> timeEntities = initMonthList(startCalendar, endCalendar);
-        for (MonthTimeEntity entity : timeEntities) {
+        List<HeadTimeEntity> timeEntities = initMonthList(startCalendar, endCalendar);
+        for (HeadTimeEntity entity : timeEntities) {
             totalCount++;
             map.put(totalCount - 1, entity);
             totalCount = totalCount + getDayCountInMonth(entity);
@@ -143,7 +138,7 @@ public class Util {
         return list;
     }
 
-    private static int getDayCountInMonth(MonthTimeEntity monthTimeEntity) {
+    private static int getDayCountInMonth(HeadTimeEntity monthTimeEntity) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, monthTimeEntity.year);
         calendar.set(Calendar.MONTH, monthTimeEntity.month);
@@ -181,41 +176,42 @@ public class Util {
         return calendar.get(Calendar.DAY_OF_WEEK) - 1;
     }
 
-    public static void setKeywords(String titleStr, TextView textView, String editTextColor, int color) {
-        if (TextUtils.isEmpty(titleStr)) {
-            textView.setText("");
-            return;
-        }
-
-        if (TextUtils.isEmpty(editTextColor)) {
-            textView.setText(titleStr);
-            return;
-        }
-
-        SpannableStringBuilder style = new SpannableStringBuilder(titleStr);
-        int site = titleStr.indexOf(editTextColor);
-        if (site == -1) {
-            site = titleStr.toUpperCase().indexOf(editTextColor);
-            if (site == -1) {
-                site = titleStr.toLowerCase().indexOf(editTextColor);
-            }
-        }
-        if (site >= 0) {
-            style.setSpan(new ForegroundColorSpan(color), site, site + editTextColor.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);   //关键字红色显示
-        }
-        textView.setText(style);
-    }
-
-
-    public static void setKeywordsSize(String titleStr, TextView tv, String editText, int textSize) {
-        if (TextUtils.isEmpty(titleStr)) {
-            tv.setText("");
-            return;
-        }
-
-        SpannableStringBuilder style = new SpannableStringBuilder(titleStr);
-        int index = titleStr.indexOf(editText);
-        style.setSpan(new AbsoluteSizeSpan(textSize, true), index, index + editText.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        tv.setText(style);
-    }
 }
+
+//    public static void setKeywords(String titleStr, TextView textView, String editTextColor, int color) {
+//        if (TextUtils.isEmpty(titleStr)) {
+//            textView.setText("");
+//            return;
+//        }
+//
+//        if (TextUtils.isEmpty(editTextColor)) {
+//            textView.setText(titleStr);
+//            return;
+//        }
+//
+//        SpannableStringBuilder style = new SpannableStringBuilder(titleStr);
+//        int site = titleStr.indexOf(editTextColor);
+//        if (site == -1) {
+//            site = titleStr.toUpperCase().indexOf(editTextColor);
+//            if (site == -1) {
+//                site = titleStr.toLowerCase().indexOf(editTextColor);
+//            }
+//        }
+//        if (site >= 0) {
+//            style.setSpan(new ForegroundColorSpan(color), site, site + editTextColor.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);   //关键字红色显示
+//        }
+//        textView.setText(style);
+//    }
+//
+//
+//    public static void setKeywordsSize(String titleStr, TextView tv, String editText, int textSize) {
+//        if (TextUtils.isEmpty(titleStr)) {
+//            tv.setText("");
+//            return;
+//        }
+//
+//        SpannableStringBuilder style = new SpannableStringBuilder(titleStr);
+//        int index = titleStr.indexOf(editText);
+//        style.setSpan(new AbsoluteSizeSpan(textSize, true), index, index + editText.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+//        tv.setText(style);
+//    }

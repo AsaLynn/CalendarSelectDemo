@@ -1,8 +1,11 @@
-package com.zxn.calendar;
+package com.zxn.calendar.holder;
 
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import com.zxn.calendar.R;
+import com.zxn.calendar.entity.HeadTimeEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,12 +25,12 @@ public class OuterRecycleViewHolder extends RecyclerView.ViewHolder {
         txtMonth = itemView.findViewById(R.id.plan_time_txt_month);
     }
 
-    public void doBindData(MonthTimeEntity timeEntity) {
+    public void doBindData(HeadTimeEntity timeEntity) {
         //String title = itemView.getContext().getString(R.string.outer_title, String.valueOf(timeEntity.year), String.valueOf(timeEntity.month + 1));
         txtMonth.setText(formatTitle(timeEntity));
     }
 
-    private String formatTitle(MonthTimeEntity timeEntity) {
+    private String formatTitle(HeadTimeEntity timeEntity) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, timeEntity.year);
         c.set(Calendar.MONTH, timeEntity.month);

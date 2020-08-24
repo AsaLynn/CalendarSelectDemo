@@ -1,13 +1,11 @@
-package com.zxn.calendar;
+package com.zxn.calendar.callback;
 
 /**
  * calendar-select
+ * Updated by zxn on 2020/8/24.
  * Created by richzjc on 18/3/15.
  */
 public interface CalendarSelectUpdateCallback {
-
-//    @Deprecated
-//    void updateMultView();
 
     void refreshLocate(int position);
 

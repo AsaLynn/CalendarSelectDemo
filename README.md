@@ -8,12 +8,35 @@
 
 #AS下载
 ```
+implementation 'com.zxn.calendar:calendar-select:1.1.1'
 implementation 'com.zxn.calendar:calendar-select:1.1.0'
-implementation 'com.zxn.calendar:calendar-select:1.0.4'
 ```
 # 使用
 
 **示例**
+- 周选择日历:
+xml布局:
+```
+<com.zxn.calendar.TimeSelectView
+    android:id="@+id/wsv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    app:max_sections="18"
+    app:time_type="week" />
+```
+监听:
+```
+wsv.timeClickListener(timeEntity -> {
+    String time = timeEntity.startYear + "-" + timeEntity.startMonth + "-" + timeEntity.startDay;
+    Toast.makeText(mContext, "时间:" + time, Toast.LENGTH_SHORT).show();
+});
+```
+属性:
+- max_sections:列表展示的最大时间组数量,以当前时间组往前推算出来的时间组数量.
+- time_type: 
+*week:以月作为时间组,周作为单位进行时间选择
+*month:以年作为时间组,月作为单位进行时间选择
 - 单选日历:
 xml布局:
 ```

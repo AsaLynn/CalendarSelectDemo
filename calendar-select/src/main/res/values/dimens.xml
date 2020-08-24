@@ -6,4 +6,6 @@
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_50">50dp</dimen>
     <dimen name="dp_1">1dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_70">70dp</dimen>
 </resources>

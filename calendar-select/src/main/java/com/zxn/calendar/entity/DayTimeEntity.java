@@ -1,4 +1,4 @@
-package com.zxn.calendar;
+package com.zxn.calendar.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

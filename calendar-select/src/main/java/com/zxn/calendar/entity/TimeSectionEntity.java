@@ -1,4 +1,4 @@
-package com.zxn.calendar.weekchoose;
+package com.zxn.calendar.entity;
 
 import com.chad.library.adapter.base.entity.JSectionEntity;
 
@@ -10,11 +10,15 @@ import com.chad.library.adapter.base.entity.JSectionEntity;
  * kotlin，数据类请直接实现SectionEntity接口即可，无需封装。
  */
 public class TimeSectionEntity extends JSectionEntity {
-    private boolean isMonth;
+    private boolean isHeader;
     private Object object;
 
-    public TimeSectionEntity(boolean isMonth, Object object) {
-        this.isMonth = isMonth;
+    public TimeSectionEntity(boolean isHeader, Object object) {
+        this.isHeader = isHeader;
+        this.object = object;
+    }
+
+    public TimeSectionEntity(Object object) {
         this.object = object;
     }
 
@@ -24,7 +28,7 @@ public class TimeSectionEntity extends JSectionEntity {
 
     @Override
     public boolean isHeader() {
-        return isMonth;
+        return isHeader;
     }
 
 }

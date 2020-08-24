@@ -1,10 +1,18 @@
-package com.zxn.calendar;
+package com.zxn.calendar.adapter;
 
 import android.graphics.drawable.Drawable;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.zxn.calendar.callback.CalendarSelectUpdateCallback;
+import com.zxn.calendar.holder.InnerViewHolder;
+import com.zxn.calendar.holder.OuterRecycleViewHolder;
+import com.zxn.calendar.R;
+import com.zxn.calendar.entity.DayTimeEntity;
+import com.zxn.calendar.entity.HeadTimeEntity;
+import com.zxn.calendar.utils.Util;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,7 +26,7 @@ import java.util.Map;
 public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     int totalCount;
-    Map<Integer, MonthTimeEntity> map;
+    Map<Integer, HeadTimeEntity> map;
     Map<Integer, List<DayTimeEntity>> listMap;
     Calendar startCalendarDate;
     Calendar endCalendarDate;
@@ -50,7 +58,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             this.selectType = selectType;
             if (list != null && list.size() == 2) {
                 totalCount = (int) list.get(0);
-                map = (Map<Integer, MonthTimeEntity>) list.get(1);
+                map = (Map<Integer, HeadTimeEntity>) list.get(1);
                 calculateListPosition();
             }
         } catch (Exception e) {
@@ -62,7 +70,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         try {
             if (list != null && list.size() == 2) {
                 totalCount = (int) list.get(0);
-                map = (Map<Integer, MonthTimeEntity>) list.get(1);
+                map = (Map<Integer, HeadTimeEntity>) list.get(1);
                 listMap.clear();
                 calculateListPosition();
                 notifyDataSetChanged();
@@ -76,7 +84,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void calculateListPosition() {
         if (startDayTime.day != 0) {
             for (Integer key : map.keySet()) {
-                MonthTimeEntity timeEntity = map.get(key);
+                HeadTimeEntity timeEntity = map.get(key);
                 if ((timeEntity.year == startDayTime.year) && (timeEntity.month == startDayTime.month)) {
                     startDayTime.listPosition = key + Util.preCount(startDayTime) + startDayTime.day;
                     startDayTime.monthPosition = key;
@@ -87,7 +95,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if (endDayTime.day != 0) {
             for (Integer key : map.keySet()) {
-                MonthTimeEntity timeEntity = map.get(key);
+                HeadTimeEntity timeEntity = map.get(key);
                 if ((timeEntity.year == endDayTime.year) && (timeEntity.month == endDayTime.month)) {
                     endDayTime.listPosition = key + Util.preCount(endDayTime) + endDayTime.day;
                     endDayTime.monthPosition = key;
@@ -185,7 +193,7 @@ public class OuterRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return totalCount;
     }
 
-    public Map<Integer, MonthTimeEntity> getMap() {
+    public Map<Integer, HeadTimeEntity> getMap() {
         return map;
     }
 

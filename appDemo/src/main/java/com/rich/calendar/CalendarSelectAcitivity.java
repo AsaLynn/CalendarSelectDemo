@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.zxn.calendar.CalendarSelectView;
-import com.zxn.calendar.DayTimeEntity;
+import com.zxn.calendar.entity.DayTimeEntity;
 
 import java.util.Calendar;
 
