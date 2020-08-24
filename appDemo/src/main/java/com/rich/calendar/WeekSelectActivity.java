@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.zxn.calendar.TimeSelectView;
 import com.zxn.presenter.view.BaseActivity;
+import com.zxn.time.SDFPattern;
+import com.zxn.time.TimeUtils;
 import com.zxn.titleview.TitleView;
 import com.zxn.utils.UIUtils;
 
@@ -53,9 +55,11 @@ public class WeekSelectActivity extends BaseActivity {
         mParam1 = getIntent().getIntExtra(ARG_PARAM1, 1);
         onInitTitle();
         wsv.timeClickListener(timeEntity -> {
-            String startTime = timeEntity.startYear + "-" + timeEntity.startMonth + "-" + timeEntity.startDay;
-            String endTime = timeEntity.endYear + "-" + timeEntity.endMonth + "-" + timeEntity.endDay;
-            Toast.makeText(mContext, startTime + "-" + endTime, Toast.LENGTH_SHORT).show();
+            /*String startTime = timeEntity.startYear + "-" + timeEntity.startMonth + "-" + timeEntity.startDay;
+            String endTime = timeEntity.endYear + "-" + timeEntity.endMonth + "-" + timeEntity.endDay;*/
+            String startTime = TimeUtils.getTimeByCalendar(timeEntity.startYear,timeEntity.startMonth,timeEntity.startDay, SDFPattern.yyyyMMdd_SDF_RR);
+            String endTime = TimeUtils.getTimeByCalendar(timeEntity.endYear,timeEntity.endMonth,timeEntity.endDay, SDFPattern.yyyyMMdd_SDF_RR);
+            Toast.makeText(mContext, startTime + "至" + endTime, Toast.LENGTH_SHORT).show();
         });
     }
 
